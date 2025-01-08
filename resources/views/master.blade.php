@@ -10,7 +10,10 @@
   <!-- Navbar -->
   @include('partial.navbar')
   <!-- /.navbar -->
+</div>
+<!-- ./wrapper -->
 
+<!-- jQuery -->
   <!-- Sidebar-->
   @include('partial.sidebar')
 

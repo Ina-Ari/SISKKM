@@ -13,10 +13,11 @@ class JenisKegiatan extends Model
     public $timestamps = false;
     protected $fillable = [
         'jenis_kegiatan',
-    ];
+    ];  
 
     public function poin()
     {
         return $this->hasMany(Poin::class, 'idjenis_kegiatan');
     }
+
 }

@@ -11,12 +11,7 @@ class dashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
-    }
-
-    public function indexMhs()
-    {
-        return view('mhs.dashboardMhs');
+        return view('dashboard'); 
     }
 
     /**
