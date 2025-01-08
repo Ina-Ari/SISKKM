@@ -21,8 +21,9 @@ class MahasiswaController extends Controller
 
         $dataMahasiswa = json_decode($mahasiswa, true)["daftar"];
         $arrayMahasiswa = [];
+        $data = Mahasiswa::all();
 
-        for ($i=0; $i < 500; $i++) {
+        for ($i=0; $i < count($data); $i++) {
             $angkatan = $dataMahasiswa[$i]["tahunAkademik"];
             $nim = (int)$dataMahasiswa[$i]["nim"];
             $nama = $dataMahasiswa[$i]["nama"];
@@ -53,7 +54,7 @@ class MahasiswaController extends Controller
                 }
             }
         }
-        // dd($arrayMahasiswa[334]);
+        // // dd($arrayMahasiswa[334]);
         if(count($arrayMahasiswa)>0)Mahasiswa::insert($arrayMahasiswa);
         return true;
     }

@@ -22,7 +22,8 @@ class Mahasiswa extends Model
         'kode_jurusan',
         'alamat',
         'email',
-        'password'
+        'password',
+        'profile'
     ];
 
 
