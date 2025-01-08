@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\RateLimiter;
 
-class AuthAdminController extends Controller 
+class AuthAdminController extends Controller
 {
     function login()
     {
@@ -17,12 +17,12 @@ class AuthAdminController extends Controller
     function indexAdmin()
     {
         return view('indexAdmin');
-    } 
+    }
 
     function daftarKegiatan()
     {
         return view('daftarkegiatan');
-    } 
+    }
 
     function loggedin(Request $request)
     {
@@ -38,7 +38,7 @@ class AuthAdminController extends Controller
         // Cek kredensial dengan guard 'admin'
         if (Auth::guard('admin')->attempt($request->only('username', 'password'))) {
             // Jika login berhasil, reset rate limiter dan buat session baru
-            Auth::user()->admin;
+            // Auth::user()->admin;
             RateLimiter::clear($key);  // Reset percobaan login
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
             return redirect()->route('indexAdmin');
@@ -53,13 +53,13 @@ class AuthAdminController extends Controller
     {
         // Log out the authenticated user
         Auth::guard('admin')->logout();
-    
+
         // Invalidate the session
         $request->session()->invalidate();
-    
+
         // Regenerate the CSRF token to prevent session fixation
         $request->session()->regenerateToken();
-    
+
         // Redirect to the login page
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
