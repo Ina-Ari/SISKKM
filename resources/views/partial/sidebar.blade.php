@@ -23,10 +23,20 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link active">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
+                {{-- <i class="right fas fa-angle-left"></i> --}}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="{{ route('daftarkegiatan') }}" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                DaftarKegiatan
+                {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
           </li>
@@ -56,14 +66,23 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Posisi</p>
                 </a>
-              </li>
-              <li class="nav-item">
+                </li>
+                <li class="nav-item">
                 <a href="{{ route('poin.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Poin</p>
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="{{ route('login') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Logout
+                {{-- <i class="right fas fa-angle-left"></i> --}}
+              </p>
+            </a>
           </li>
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">

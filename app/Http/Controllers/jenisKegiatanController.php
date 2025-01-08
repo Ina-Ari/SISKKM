@@ -12,6 +12,9 @@ class jenisKegiatanController extends Controller
      */
     public function index()
     {
+        // $data = JenisKegiatan::get();
+        // return view('jenis_kegiatan', compact('data'));
+
         $data = JenisKegiatan::all();
         return view('jenis_kegiatan', compact('data'));
     }
