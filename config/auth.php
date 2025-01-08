@@ -14,7 +14,11 @@ return [
     */
 
     'defaults' => [
+<<<<<<< HEAD
         'guard' => env('AUTH_GUARD', 'web'),
+=======
+        'guard'     => env('AUTH_GUARD', 'web'),
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -37,8 +41,17 @@ return [
 
     'guards' => [
         'web' => [
+<<<<<<< HEAD
             'driver' => 'session',
             'provider' => 'users',
+=======
+            'driver'    => 'session',
+            'provider'  => 'users',
+        ],
+        'admin' => [
+            'driver'    => 'session',
+            'provider'  => 'admin',
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
         ],
     ],
 
@@ -57,6 +70,7 @@ return [
     |
     | Supported: "database", "eloquent"
     |
+<<<<<<< HEAD
     */
 
     'providers' => [
@@ -69,6 +83,20 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+=======
+    */ 
+
+    'providers' => [
+        'users' => [
+            'driver'    => 'eloquent',
+            'model'     => env('AUTH_MODEL', App\Models\AuthMhs::class),
+        ],
+        'admin' => [
+            'driver'    => 'eloquent',
+            'model'     => env('AUTH_MODEL', App\Models\AuthAdmin::class),
+        ],
+
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     ],
 
     /*

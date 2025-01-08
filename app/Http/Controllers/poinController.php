@@ -29,7 +29,11 @@ class poinController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 
     /**
@@ -37,7 +41,20 @@ class poinController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         //
+=======
+        $request->validate([
+            'idjenis_kegiatan'  => 'required',
+            'idtingkat_kegiatan'=> 'required',
+            'id_posisi'         => 'required',
+            'poin'              => 'required|integer',
+        ]);
+
+        Poin::create($request->all());
+
+        return redirect()->back()->with('success', 'Data poin berhasil ditambahkan!');
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 
     /**
@@ -59,9 +76,26 @@ class poinController extends Controller
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
     public function update(Request $request, string $id)
     {
         //
+=======
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'idjenis_kegiatan'  => 'required',
+            'idtingkat_kegiatan'=> 'required',
+            'id_posisi'         => 'required',
+            'poin'              => 'required|integer',
+        ]);
+
+        $poin = Poin::findOrFail($id);
+
+        $poin->update($request->all());
+
+        return redirect()->back()->with('success', 'Data poin berhasil diperbarui!');
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 
     /**
@@ -69,6 +103,18 @@ class poinController extends Controller
      */
     public function destroy(string $id)
     {
+<<<<<<< HEAD
         //
+=======
+        $poin = Poin::find($id);
+
+        if ($poin) {
+            // Menghapus data
+            $poin->delete();
+            return redirect()->route('poin.index')->with('success', 'poin berhasil dihapus.');
+        } else {
+            return redirect()->route('poin.index')->with('error', 'Data tidak ditemukan.');
+        }
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 }

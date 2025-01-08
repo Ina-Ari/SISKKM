@@ -14,6 +14,10 @@ class jenisKegiatanController extends Controller
     {
         // $data = JenisKegiatan::get();
         // return view('jenis_kegiatan', compact('data'));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
         $data = JenisKegiatan::all();
         return view('jenis_kegiatan', compact('data'));
     }

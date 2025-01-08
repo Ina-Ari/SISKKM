@@ -1,4 +1,8 @@
+<<<<<<< HEAD
   <!DOCTYPE html>
+=======
+<!DOCTYPE html>
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
 <html lang="en">
 <head>
     <title>@yield('title')</title>
@@ -7,6 +11,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
+<<<<<<< HEAD
   {{-- <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
@@ -38,10 +43,28 @@
     <!-- Control sidebar content goes here -->
   </aside> --}}
   <!-- /.control-sidebar -->
+=======
+  <!-- Navbar -->
+  @include('partial.navbar')
+  <!-- /.navbar -->
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+<<<<<<< HEAD
+=======
+  <!-- Sidebar-->
+  @include('partial.sidebar')
+
+  <!-- Content -->
+  <div class="content-wrapper">
+    @yield('content')
+  </div>
+</div>
+
+<!-- Script -->
+>>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     @include('partial.script')
 </body>
 </html>

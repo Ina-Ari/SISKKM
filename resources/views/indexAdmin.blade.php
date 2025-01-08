@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Dashboard')
+@section('title', 'Dashboard Admin')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
+              <h1 class="m-0">Dashboard Admin</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -25,13 +25,8 @@
               <div class="small-box bg-info">
                 <div class="inner">
                   <h3>150</h3>
-<<<<<<< HEAD
 
                   <p>New Orders</p>
-=======
-                  <p>Jumlah Mahasiswa</p>
-                  <p>Mahasiswa Terdaftar</p>
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -44,14 +39,9 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-<<<<<<< HEAD
                   <h3>53<sup style="font-size: 20px">%</sup></h3>
 
                   <p>Bounce Rate</p>
-=======
-                  <h3>53<sup style="font-size: 20px"></sup></h3>
-                  <p>Kegiatan Terverifikasi</p>
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -66,11 +56,7 @@
                 <div class="inner">
                   <h3>44</h3>
 
-<<<<<<< HEAD
                   <p>User Registrations</p>
-=======
-                  <p>Kegiatan Belum Terverifikasi</p>
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
@@ -79,11 +65,7 @@
               </div>
             </div>
             <!-- ./col -->
-<<<<<<< HEAD
             <div class="col-lg-3 col-6">
-=======
-            {{-- <div class="col-lg-3 col-6">
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
@@ -96,11 +78,7 @@
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-<<<<<<< HEAD
             </div>
-=======
-            </div> --}}
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
             <!-- ./col -->
           </div>
           <!-- /.row -->
