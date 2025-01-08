@@ -38,7 +38,6 @@ class AuthAdminController extends Controller
         // Cek kredensial dengan guard 'admin'
         if (Auth::guard('admin')->attempt($request->only('username', 'password'))) {
             // Jika login berhasil, reset rate limiter dan buat session baru
-            Auth::user()->admin;
             RateLimiter::clear($key);  // Reset percobaan login
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
             return redirect()->route('indexAdmin');

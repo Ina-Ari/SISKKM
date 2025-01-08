@@ -19,7 +19,7 @@ class AuthMhsController extends Controller
 
     function indexMhs()
     {
-        return view('indexMhs');
+        return view('mhs.dashboardMhs');
     } 
 
     function confirmationMail()
@@ -91,9 +91,6 @@ class AuthMhsController extends Controller
     // Logout method for 'mahasiswa'
     public function logoutMhs(Request $request)
     {
-        // Log out the authenticated user for 'mahasiswa'
-        Auth::guard('mahasiswa')->logout();
-
         // Invalidate the session
         $request->session()->invalidate();
 
