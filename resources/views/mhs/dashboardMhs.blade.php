@@ -1,4 +1,4 @@
-@extends('master')
+@extends('mhs.masterMhs')
 
 @section('title', 'Dashboard')
 
@@ -9,10 +9,16 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1 class="m-0">Dashboard</h1>
-            </div><!-- /.col -->
+            </div>
+            <!-- /.col -->
           </div><!-- /.row -->
+        </div>
+        <div class="col-sm-6">
+            <h2 class="m-0">Selamat datang Mahasiswa</h3>
         </div><!-- /.container-fluid -->
     </div>
+
+
       <!-- /.content-header -->
 
       <!-- Main content -->
@@ -24,9 +30,9 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>150</h3>
-                  <p>Jumlah Mahasiswa</p>
-                  <p>Mahasiswa Terdaftar</p>
+                  <h3>20</h3>
+
+                  <p>Kegiatan Diikuti</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -39,7 +45,8 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px"></sup></h3>
+                  <h3>15</h3>
+
                   <p>Kegiatan Terverifikasi</p>
                 </div>
                 <div class="icon">
@@ -53,7 +60,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3>5</h3>
 
                   <p>Kegiatan Belum Terverifikasi</p>
                 </div>

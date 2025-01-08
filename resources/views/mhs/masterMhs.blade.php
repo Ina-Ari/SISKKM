@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
     <title>@yield('title')</title>
-    @include('partial.head')
+    @include('./partial.head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
-  @include('partial.navbar')
+  @include('./partial.navbar')
   <!-- /.navbar -->
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
   <!-- Sidebar-->
-  @include('partial.sidebar')
+  @include('mhs.partialMhs.sidebarMhs')
 
   <!-- Content -->
   <div class="content-wrapper">
@@ -24,6 +21,6 @@
 </div>
 
 <!-- Script -->
-    @include('partial.script')
+    @include('./partial.script')
 </body>
 </html>

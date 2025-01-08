@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JenisKegiatan extends Model
+class TingkatKegiatan extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'idjenis_kegiatan';
-    protected $table = 'jenis_kegiatan';
+    protected $primaryKey = 'idtingkat_kegiatan';
+    protected $table = 'tingkat_kegiatan';
     public $timestamps = false;
     protected $fillable = [
-        'jenis_kegiatan',
-    ];  
+        'tingkat_kegiatan',
+    ];
 
     public function poin()
     {
-        return $this->hasMany(Poin::class, 'idjenis_kegiatan');
+        return $this->hasMany(Poin::class, 'idtingkat_kegiatan');
     }
-
 }

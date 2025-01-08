@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link">
+    <a href="{{ route('dashboardMhs') }}" class="brand-link">
       <img src="{{ asset('image/logo pnb.png') }}" alt="PNB Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Politeknik Negeri Bali</span>
     </a>
@@ -10,10 +10,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <a href="#" class="d-block">Mahasiswa</a>
         </div>
       </div>
 
@@ -23,24 +23,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="{{ route('dashboardMhs') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
           </li>
-          <li class="nav-item menu-open">
-            <a href="{{ route('daftarkegiatan') }}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                DaftarKegiatan
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
@@ -66,24 +56,15 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Posisi</p>
                 </a>
-                </li>
-                <li class="nav-item">
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('poin.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Poin</p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item menu-open">
-            <a href="{{ route('login') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Logout
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-          </li>
+          </li> --}}
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>

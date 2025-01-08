@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\JenisKegiatan;
+use App\Models\TingkatKegiatan;
 
-class jenisKegiatanController extends Controller
+class tingkatKegiatanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $data = JenisKegiatan::get();
-        // return view('jenis_kegiatan', compact('data'));
-
-        $data = JenisKegiatan::all();
-        return view('jenis_kegiatan', compact('data'));
+        $data = TingkatKegiatan::all();
+        return view('tingkat_kegiatan', compact('data'));
     }
 
     /**
@@ -33,11 +30,11 @@ class jenisKegiatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_kegiatan' => 'required|string|max:45',
+            'tingkat_kegiatan' => 'required|string|max:45',
         ]);
 
-        JenisKegiatan::create($request->all());
-        return redirect()->back()->with('success', 'Jenis kegiatan berhasil ditambahkan.');
+        TingkatKegiatan::create($request->all());
+        return redirect()->back()->with('success', 'Tingkat kegiatan berhasil ditambahkan.');
     }
 
     /**
@@ -64,17 +61,17 @@ class jenisKegiatanController extends Controller
 
         // Validasi input
         $request->validate([
-            'jenis_kegiatan' => 'required|string|max:45',
+            'tingkat_kegiatan' => 'required|string|max:45',
         ]);
 
-        // Mencari jenis kegiatan berdasarkan ID
-        $jenisKegiatan = JenisKegiatan::findOrFail($id);
+        // Mencari tingkat kegiatan berdasarkan ID
+        $tingkatKegiatan = TingkatKegiatan::findOrFail($id);
 
         // Mengupdate data
-        $jenisKegiatan->update($request->all());
+        $tingkatKegiatan->update($request->all());
 
         // Kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Jenis kegiatan berhasil diubah.');
+        return redirect()->back()->with('success', 'tingkat kegiatan berhasil diubah.');
 
     }
 
@@ -85,14 +82,14 @@ class jenisKegiatanController extends Controller
     public function destroy(string $id)
     {
         /// Mencari data berdasarkan ID
-        $jenisKegiatan = JenisKegiatan::find($id);
+        $tingkatKegiatan = TingkatKegiatan::find($id);
 
-        if ($jenisKegiatan) {
+        if ($tingkatKegiatan) {
             // Menghapus data
-            $jenisKegiatan->delete();
-            return redirect()->route('jenisKegiatan.index')->with('success', 'Jenis kegiatan berhasil dihapus.');
+            $tingkatKegiatan->delete();
+            return redirect()->route('tingkatKegiatan.index')->with('success', 'tingkat kegiatan berhasil dihapus.');
         } else {
-            return redirect()->route('jenisKegiatan.index')->with('error', 'Data tidak ditemukan.');
+            return redirect()->route('tingkatKegiatan.index')->with('error', 'Data tidak ditemukan.');
         }
     }
 }

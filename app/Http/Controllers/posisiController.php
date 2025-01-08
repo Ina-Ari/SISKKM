@@ -3,20 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\JenisKegiatan;
-
-class jenisKegiatanController extends Controller
+use App\Models\Posisi;
+class posisiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $data = JenisKegiatan::get();
-        // return view('jenis_kegiatan', compact('data'));
-
-        $data = JenisKegiatan::all();
-        return view('jenis_kegiatan', compact('data'));
+        $data = Posisi::all();
+        return view('posisi', compact('data'));
     }
 
     /**
@@ -33,11 +29,11 @@ class jenisKegiatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_kegiatan' => 'required|string|max:45',
+            'nama_posisi' => 'required|string|max:45',
         ]);
 
-        JenisKegiatan::create($request->all());
-        return redirect()->back()->with('success', 'Jenis kegiatan berhasil ditambahkan.');
+        Posisi::create($request->all());
+        return redirect()->back()->with('success', 'posis berhasil ditambahkan.');
     }
 
     /**
@@ -64,14 +60,14 @@ class jenisKegiatanController extends Controller
 
         // Validasi input
         $request->validate([
-            'jenis_kegiatan' => 'required|string|max:45',
+            'nama_posisi' => 'required|string|max:45',
         ]);
 
         // Mencari jenis kegiatan berdasarkan ID
-        $jenisKegiatan = JenisKegiatan::findOrFail($id);
+        $posisi = Posisi::findOrFail($id);
 
         // Mengupdate data
-        $jenisKegiatan->update($request->all());
+        $posisi->update($request->all());
 
         // Kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Jenis kegiatan berhasil diubah.');
@@ -85,14 +81,14 @@ class jenisKegiatanController extends Controller
     public function destroy(string $id)
     {
         /// Mencari data berdasarkan ID
-        $jenisKegiatan = JenisKegiatan::find($id);
+        $posisi = Posisi::find($id);
 
-        if ($jenisKegiatan) {
+        if ($posisi) {
             // Menghapus data
-            $jenisKegiatan->delete();
-            return redirect()->route('jenisKegiatan.index')->with('success', 'Jenis kegiatan berhasil dihapus.');
+            $posisi->delete();
+            return redirect()->route('posisi.index')->with('success', 'JPosisi berhasil dihapus.');
         } else {
-            return redirect()->route('jenisKegiatan.index')->with('error', 'Data tidak ditemukan.');
+            return redirect()->route('posisi.index')->with('error', 'Data tidak ditemukan.');
         }
     }
 }
