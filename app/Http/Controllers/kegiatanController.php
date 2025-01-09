@@ -9,13 +9,13 @@ class kegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = Kegiatan::where('verif', 'true')->get(); // Data kegiatan terverifikasi
+        $kegiatan = Kegiatan::where('verif', 'true')->get();
         return view('kegiatan', compact('kegiatan'));
     }
 
     public function notVerified()
     {
-        $kegiatan = Kegiatan::where('verif', '!=', 'true')->get(); // Data kegiatan belum terverifikasi
+        $kegiatan = Kegiatan::where('verif', '!=', 'true')->get();
         return view('kegiatan_not_verified', compact('kegiatan'));
     }
 
