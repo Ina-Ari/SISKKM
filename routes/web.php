@@ -44,7 +44,7 @@ Route::get('/changepassword/{email}/{token}', [AuthMhsController::class, 'change
 // Route::get('/changepassword/{token}', [AuthMhsController::class, 'changepassword'])->name('changepassword');
 // Route::get('/changepassword', [AuthMhsController::class, 'changepassword'])->name('changepassword');
 Route::post('/updatepassword', [AuthMhsController::class, 'updatePassword'])->name('updatePassword');
-Route::get('/logout', [AuthMhsController::class, 'logout'])->name('logout');
+Route::get('/logoutmhs', [AuthMhsController::class, 'logoutmhs'])->name('logoutmhs');
 
 
 //Routing Pages
@@ -54,7 +54,6 @@ Route::resource('jenisKegiatan', jenisKegiatanController::class);
 // Route::get('/jenisKegiatan', [jenisKegiatanController::class, 'index'])->name('jenisKegiatan');
 
 Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboardMhs', [dashboardController::class, 'indexMhs'])->name('dashboardMhs');
 Route::get('/apijurusan', [JurusanController::class, 'fetchJurusan']);
 Route::get('/apiprodi', [ProdiController::class, 'fetchProdi']);
 Route::get('/apimhs', [MahasiswaController::class, 'fetchMahasiswa']);
