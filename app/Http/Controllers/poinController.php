@@ -8,11 +8,8 @@ use App\Models\TingkatKegiatan;
 use App\Models\Posisi;
 use App\Models\Poin;
 
-class poinController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
+class poinController extends Controller{
+    
     public function index()
     {
 
@@ -23,27 +20,9 @@ class poinController extends Controller
         // dd($data);
         return view('poin', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        //
-=======
         $request->validate([
             'idjenis_kegiatan'  => 'required',
             'idtingkat_kegiatan'=> 'required',
@@ -54,12 +33,7 @@ class poinController extends Controller
         Poin::create($request->all());
 
         return redirect()->back()->with('success', 'Data poin berhasil ditambahkan!');
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
@@ -73,15 +47,7 @@ class poinController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-<<<<<<< HEAD
     public function update(Request $request, string $id)
-    {
-        //
-=======
-    public function update(Request $request, $id)
     {
         $request->validate([
             'idjenis_kegiatan'  => 'required',
@@ -95,7 +61,6 @@ class poinController extends Controller
         $poin->update($request->all());
 
         return redirect()->back()->with('success', 'Data poin berhasil diperbarui!');
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 
     /**
@@ -103,9 +68,6 @@ class poinController extends Controller
      */
     public function destroy(string $id)
     {
-<<<<<<< HEAD
-        //
-=======
         $poin = Poin::find($id);
 
         if ($poin) {
@@ -115,6 +77,5 @@ class poinController extends Controller
         } else {
             return redirect()->route('poin.index')->with('error', 'Data tidak ditemukan.');
         }
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     }
 }

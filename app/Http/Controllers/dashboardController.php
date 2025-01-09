@@ -9,18 +9,17 @@ class dashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-<<<<<<< HEAD
+    public function index(){
+
         return view('dashboard');
-=======
+
         return view('dashboard'); 
     }
 
     public function indexMhs()
     {
         return view('dashboard'); 
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
+        
     }
 
     /**

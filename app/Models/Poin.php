@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Poin extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
-    protected $primaryKey = 'idpoin';
-=======
     protected $primaryKey = 'id_poin';
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     protected $table = 'poin';
     public $timestamps = false;
     protected $fillable = [
