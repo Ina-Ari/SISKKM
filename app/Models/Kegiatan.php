@@ -9,12 +9,10 @@ class Kegiatan extends Model
 {
     use HasFactory;
 
-    protected $table = 'kegiatan'; // Nama tabel kegiatan
-    //tambah
-    protected $primaryKey = 'id_kegiatan'; // Menentukan kolom primary key
+    protected $table = 'kegiatan';
+    protected $primaryKey = 'id_kegiatan';
 
-    // Nonaktifkan timestamps
-    public $timestamps = false; // Tambahkan ini
+    public $timestamps = false;
 
     protected $fillable = [
         'nim',

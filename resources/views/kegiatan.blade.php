@@ -12,7 +12,7 @@
         </div>
         <div class="col-sm-6 text-right">
             <button id="btnCancelSelected" class="btn btn-danger btn-sm">Cancel</button>
-            <button id="btnCancelAll" class="btn btn-warning btn-sm">Cancel All</button>
+            <button id="btnCancelAll" class="btn btn-warning btn-sm">Cancel ll</button>
     </div>
 </div>
     <div class="card-body">

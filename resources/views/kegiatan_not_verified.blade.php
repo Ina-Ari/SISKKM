@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         <div class="col-sm-6">
-            <h3 class="m-0">Kegiatan Belum Diverifikasi</h3>
+            <h3 class="m-0">Kegiatan Belum Terverifikasi</h3>
         </div>
         <div class="col-sm-6 text-right">
             <button id="btnVerifSelected" class="btn btn-primary btn-sm">Verif</button>

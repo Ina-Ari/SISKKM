@@ -28,6 +28,7 @@ Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('jenisKegiatan', jenisKegiatanController::class);
 
+//Verifikasi
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
 Route::get('kegiatan/not-verified', [KegiatanController::class, 'notVerified'])->name('kegiatan_not_verified');
 Route::post('kegiatan/verify-selected', [KegiatanController::class, 'verifySelected'])->name('kegiatan.verify_selected');

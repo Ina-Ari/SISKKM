@@ -15,7 +15,7 @@ class kegiatanController extends Controller
 
     public function notVerified()
     {
-        $kegiatan = Kegiatan::where('verif', '!=', 'true')->get(); // Data kegiatan belum terverifikasi
+        $kegiatan = Kegiatan::where('verif', '!=', 'true')->get();
         return view('kegiatan_not_verified', compact('kegiatan'));
     }
 
@@ -32,6 +32,6 @@ class kegiatanController extends Controller
         $ids = $request->input('selected_kegiatan', []);
         Kegiatan::whereIn('id_kegiatan', $ids)->update(['verif' => 'false']);
 
-        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan yang dipilih berhasil dibatalkan.');
+        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dibatalkan.');
     }
 }
