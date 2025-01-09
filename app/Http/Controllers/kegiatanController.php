@@ -9,7 +9,7 @@ class kegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = Kegiatan::where('verif', 'true')->get(); // Data kegiatan terverifikasi
+        $kegiatan = Kegiatan::where('verif', 'true')->get();
         return view('kegiatan', compact('kegiatan'));
     }
 
