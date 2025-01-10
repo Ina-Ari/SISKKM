@@ -25,7 +25,6 @@
               <div class="small-box bg-info">
                 <div class="inner">
                   <h3>150</h3>
-                  <p>Jumlah Mahasiswa</p>
                   <p>Mahasiswa Terdaftar</p>
                 </div>
                 <div class="icon">
@@ -54,7 +53,6 @@
               <div class="small-box bg-warning">
                 <div class="inner">
                   <h3>44</h3>
-
                   <p>Kegiatan Belum Terverifikasi</p>
                 </div>
                 <div class="icon">
@@ -64,6 +62,7 @@
               </div>
             </div>
             <!-- ./col -->
+            <div class="col-lg-3 col-6">
             {{-- <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-danger">
@@ -77,7 +76,6 @@
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div> --}}
             <!-- ./col -->
           </div>
           <!-- /.row -->

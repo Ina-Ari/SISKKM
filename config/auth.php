@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard'     => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -60,8 +60,6 @@ return [
     | be assigned to any extra authentication guards you have defined.
     |
     | Supported: "database", "eloquent"
-    |
-    */ 
 
     'providers' => [
         'users' => [
@@ -72,7 +70,6 @@ return [
             'driver'    => 'eloquent',
             'model'     => env('AUTH_MODEL', App\Models\AuthAdmin::class),
         ],
-
     ],
 
     /*

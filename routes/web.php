@@ -1,10 +1,10 @@
 <?php
-
-use App\Http\Controllers\AuthAdminController;
-use App\Http\Controllers\AuthMhsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\jenisKegiatanController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\kegiatanController;
+use App\Http\Controllers\AuthAdminController;
+use App\Http\Controllers\AuthMhsController;
 use App\Http\Controllers\MailController;
 use Illuminate\Routing\Route as RoutingRoute;
 use App\Http\Controllers\tingkatKegiatanController;
@@ -18,10 +18,20 @@ use App\Http\Controllers\MahasiswaController;
 // use App\Http\Controllers\jenisKegiatanController;
 
 
+
 // Route::get('/', function () {
 //     return view('master');
 // });
 
+Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
+// Route::get('/jenisKegiatan', [jenisKegiatanController::class, 'index'])->name('jenisKegiatan');
+
+Route::resource('jenisKegiatan', jenisKegiatanController::class);
+
+Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+Route::get('kegiatan/not-verified', [KegiatanController::class, 'notVerified'])->name('kegiatan_not_verified');
+Route::post('kegiatan/verify-selected', [KegiatanController::class, 'verifySelected'])->name('kegiatan.verify_selected');
+Route::post('kegiatan/cancel-selected', [KegiatanController::class, 'cancelSelected'])->name('kegiatan.cancel_selected');
 // Routing Admin
 Route::get('/login', [AuthAdminController::class, 'login'])->name('login');
 Route::post('/loggedin', [AuthAdminController::class, 'loggedin'])->name('loggedin')->middleware('throttle:5,1');
@@ -59,4 +69,5 @@ Route::resource('jenisKegiatan', jenisKegiatanController::class);
 Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
 Route::resource('posisi', posisiController::class);
 Route::resource('poin', poinController::class);
+?>
 
