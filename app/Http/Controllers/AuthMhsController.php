@@ -27,21 +27,13 @@ class AuthMhsController extends Controller
         return view('confirmationMail');
     } 
 
-    // function changepassword($token)
-    // {
-    //     return view('changepassword', ['token' => $token]);
-    // } 
-
-    // function changepassword($token)
-    // {
-    //     return view('changepassword', ['token' => $token]);
-    // }
-    
-    public function changepassword($token, $email)
+    public function changepassword(Request $request)
     {
+        $token = $request->query('token');
+        $email = $request->query('email');
+    
         return view('changepassword', ['token' => $token, 'email' => $email]);
     }
-    
     
     function emailSubmit()
     {

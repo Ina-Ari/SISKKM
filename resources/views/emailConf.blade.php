@@ -27,7 +27,7 @@
       </a> 
     </div>
     <div class="card-body">
-        <p class="login-box-msg">Email konfirmasi sudah terkirim. Anda dapat mengecek via <a href="mail.google.com">email yang diverifikasi.</a></p>
+        <p class="login-box-msg">Email konfirmasi sudah terkirim. Anda dapat mengecek via <a href="https://mail.google.com" target="_blank">email yang diverifikasi.</a></p>
         <!-- /.social-auth-links -->
       </div>      
     <!-- /.card-body -->

@@ -53,7 +53,7 @@
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>
                 </div>
             </div>
-        </form>                
+          </form>                
       <!-- /.social-auth-links -->
     </div>
     <!-- /.card-body -->

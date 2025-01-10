@@ -37,8 +37,8 @@ class AuthMhs extends Authenticatable
         'angkatan',
         'no_telepon',
         'jenjang_pendidikan',
-        // 'id_prodi',
-        // 'id_jurusan',
+        'kode_prodi',
+        'kode_jurusan',
         'alamat',
         'email',
         'password',
@@ -68,23 +68,23 @@ class AuthMhs extends Authenticatable
         ];
     }
 
-    // /**
-    //  * Relasi ke tabel Prodi.
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    //  */
-    // public function prodi()
-    // {
-    //     return $this->belongsTo(prodi::class, 'id_prodi');
-    // }
+    /**
+     * Relasi ke tabel Prodi.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function prodi()
+    {
+        return $this->belongsTo(prodi::class, 'kode_prodi');
+    }
 
-    // /**
-    //  * Relasi ke tabel Jurusan.
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    //  */
-    // public function jurusan()
-    // {
-    //     return $this->belongsTo(jurusan::class, 'id_jurusan');
-    // }
+    /**
+     * Relasi ke tabel Jurusan.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function jurusan()
+    {
+        return $this->belongsTo(jurusan::class, 'kode_jurusan');
+    }
 }

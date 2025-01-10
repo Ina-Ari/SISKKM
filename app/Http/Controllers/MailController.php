@@ -33,17 +33,16 @@ class MailController extends Controller
     
         // Pesan email
         $msg = "Ini adalah email konfirmasi untuk perubahan password Anda. Silakan klik tautan berikut untuk melanjutkan proses: ";
-        // $msg .= url('/changepassword' . $token); // Tautan reset password
-        // $msg .= url('/changepassword/' . $token);  // Menggunakan token dalam URL path
-        // $msg .= url('/changepassword?email=' . urlencode($to) . '&token=' . $token); 
-        $msg .= url('/changepassword?token=' . $token . '&email=' . urlencode($to)); // Tautan reset password
+        $msg .= url('/changepassword') . '?token=' . $token . '&email=' . urlencode($to);
         $subject = "Konfirmasi Perubahan Password";
     
         // Kirim email
         Mail::to($to)->send(new ConfirmationMail($msg, $subject));
     
         // Beri feedback ke user
-        return back()->with('success', 'Email berhasil dikirim. Silakan cek email Anda.');
+        // return back()->with('success', 'Email berhasil dikirim. Silakan cek email Anda.');
+        return redirect()->route('emailConf');
+
     }
     
 
