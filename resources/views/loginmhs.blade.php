@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIPRAJA PNB | LOGIN</title>
 
+  <link rel="icon" href="{{ asset('image/logo pnb.png') }}" type="image/png">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -21,13 +22,11 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-        <a href="../../index2.html" class="h1">
-            <h2>SIPRAJA</h2>
-            <h4>Politeknik Negeri Bali</h4>
-          </a>
-        </div>
+        <h1><b>SIPRAJA</b></h1>
+        <h4>Politeknik Negeri Bali</h4>
+    </div>
         <div class="card-body">
-          <p class="login-box-msg">Webpage Mahasiswa PNB</p>
+          <p class="login-box-msg"><b>Webpage Mahasiswa PNB</b></p>
     <form action="{{ route('loggedinmhs') }}" method="post">
       @csrf
         <div class="input-group mb-3">

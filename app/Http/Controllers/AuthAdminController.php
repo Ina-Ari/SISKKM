@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\DB;
 
 class AuthAdminController extends Controller 
 {
@@ -39,7 +40,22 @@ class AuthAdminController extends Controller
         if (Auth::guard('admin')->attempt($request->only('username', 'password'))) {
             // Jika login berhasil, reset rate limiter dan buat session baru
             RateLimiter::clear($key);  // Reset percobaan login
+
+            // Hitung total kegiatan yang diajukan oleh mahasiswa
+            $totalMhs = DB::table('mahasiswa')->count();
+
+            $totalVerifTrue = DB::table('kegiatan')
+            ->where('verifsertif', 'true')
+            ->count();
+
+            $totalVerifFalse = DB::table('kegiatan')
+            ->where('verifsertif', 'false')
+            ->count();        
+
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
+            $request->session()->put('totalMhs', $totalMhs);
+            $request->session()->put('totalVerifTrue', $totalVerifTrue);
+            $request->session()->put('totalVerifFalse', $totalVerifFalse);  
             return redirect()->route('indexAdmin');
         } else {
             // Jika login gagal, tambahkan percobaan login

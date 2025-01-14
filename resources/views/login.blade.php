@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIPRAJA PNB | ADMIN LOGIN</title>
 
+  <link rel="icon" href="{{ asset('image/logo pnb.png') }}" type="image/png">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
+  <!-- Theme style --> 
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
   <link rel="icon" href="#">
@@ -27,7 +28,7 @@
       </a> 
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Webpage Khusus Administrator</p>
+      <p class="login-box-msg"><b>Webpage Administrator</b></p>
       <form action="{{ route('loggedin') }}" method="post">
         @csrf
         <div class="input-group mb-3">
@@ -46,17 +47,9 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
+        <div class="row" align="center">
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-12">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->

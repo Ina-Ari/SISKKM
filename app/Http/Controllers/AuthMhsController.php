@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -17,10 +16,20 @@ class AuthMhsController extends Controller
         return view('loginmhs');
     } 
 
-    function indexMhs()
+    // function indexMhs()
+    // {   
+    //     return view('mhs.dashboardMhs');
+    // } 
+
+    public function indexMhs()
     {
+        // dd(session()->all());
+        if (!session()->has('nama')) {
+            return redirect()->route('loginmhs');
+        }
+    
         return view('mhs.dashboardMhs');
-    } 
+    }
 
     function confirmationMail()
     {
@@ -70,8 +79,44 @@ class AuthMhsController extends Controller
             // Login pengguna
             Auth::login($user);
             RateLimiter::clear($key); // Reset percobaan login
+
+            // Ambil data kegiatan milik mahasiswa dari tabel kegiatan, Join dengan tabel terkait
+            $kegiatan = DB::table('kegiatan')
+            ->join('tingkat_kegiatan', 'kegiatan.idtingkat_kegiatan', '=', 'tingkat_kegiatan.idtingkat_kegiatan')
+            ->join('posisi', 'kegiatan.id_posisi', '=', 'posisi.id_posisi') // Tambahkan join ke tabel posisi
+            ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin') // Tambahkan join ke tabel poin
+            ->where('kegiatan.nim', $user->nim)
+            ->select('kegiatan.*', 'tingkat_kegiatan.tingkat_kegiatan', 'posisi.nama_posisi', 'poin.poin') // Pilih kolom tambahan dari posisi
+            ->get();
+
+            // Simpan data kegiatan ke session
+            $request->session()->put('kegiatan', $kegiatan);
+                 
+            // Hitung total kegiatan terverifikasi yang diajukan oleh mahasiswa
+            $totalVerifTrue = DB::table('kegiatan')
+            ->where('verifsertif', 'true')
+            ->where('nim', $user->nim) // Perbaiki query: tambahkan kondisi 'nim' sebagai filter
+            ->count();
+        
+            $totalVerifFalse = DB::table('kegiatan')
+            ->where('verifsertif', 'false')
+            ->where('nim', $user->nim) // Perbaiki query: tambahkan kondisi 'nim' sebagai filter
+            ->count();
+
+            // Hitung total kegiatan yang diajukan oleh mahasiswa
+            $totalKegiatan = DB::table('kegiatan')
+            ->where('nim', $user->nim)
+            ->count();
+            
+            // Simpan value yang diperlukan untuk session mahasiswa
             $request->session()->regenerate(); // Regenerasi sesi
-            return redirect()->route('indexMhs'); // Redirect ke halaman mahasiswa
+            $request->session()->put('nama', $user->nama); 
+            $request->session()->put('totalVerifTrue', $totalVerifTrue);
+            $request->session()->put('totalVerifFalse', $totalVerifFalse);  
+            $request->session()->put('totalKegiatan', $totalKegiatan);
+            
+            // Redirect ke halaman mahasiswa
+            return redirect()->route('indexMhs'); 
         } else {
             // Jika login gagal, tambahkan hit ke RateLimiter
             RateLimiter::hit($key, 60); // Tambah percobaan, reset setelah 60 detik

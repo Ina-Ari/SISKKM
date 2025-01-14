@@ -13,7 +13,7 @@
           <img src="dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Mahasiswa</a>
+          <a href="#" class="d-block">{{ session('nama') }}</a>
         </div>
       </div>
 

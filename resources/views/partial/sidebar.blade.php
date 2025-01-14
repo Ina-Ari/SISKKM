@@ -23,7 +23,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link active">
+            <a href="{{ route('indexAdmin') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -565,6 +565,15 @@
             </a>
           </li> --}}
         </ul>
+        <li class="nav-item menu-open">
+          <a href="{{ route('logout') }}" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Logout
+              {{-- <i class="right fas fa-angle-left"></i> --}}
+            </p>
+          </a>
+        </li>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
