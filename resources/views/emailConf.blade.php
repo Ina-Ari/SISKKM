@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIPRAJA PNB | EMAIL CONFIRM</title>
 
+  <link rel="icon" href="{{ asset('image/logo pnb.png') }}" type="image/png">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -27,7 +28,7 @@
       </a> 
     </div>
     <div class="card-body">
-        <p class="login-box-msg">Email konfirmasi sudah terkirim. Anda dapat mengecek via <a href="mail.google.com">email yang diverifikasi.</a></p>
+        <p class="login-box-msg">Email konfirmasi sudah terkirim. Anda dapat mengecek via <a href="https://mail.google.com" target="_blank">email yang diverifikasi.</a></p>
         <!-- /.social-auth-links -->
       </div>      
     <!-- /.card-body -->

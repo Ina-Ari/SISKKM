@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SIPRAJA PNB | CHANGE PASSWORD</title>
 
+  <link rel="icon" href="{{ asset('image/logo pnb.png') }}" type="image/png">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -53,7 +54,7 @@
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>
                 </div>
             </div>
-        </form>                
+          </form>                
       <!-- /.social-auth-links -->
     </div>
     <!-- /.card-body -->

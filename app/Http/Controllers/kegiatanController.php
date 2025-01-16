@@ -13,18 +13,14 @@ class kegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = Kegiatan::where('verif', 'true')->get();
+        $kegiatan = Kegiatan::with(['poin', 'posisi', 'tingkatKegiatan', 'jenisKegiatan' ])->where('verif', 'true')->get();
         return view('kegiatan', compact('kegiatan'));
     }
 
     public function notVerified()
     {
-        $poin = Poin::all();
-        $posisi = Posisi::all();
-        $tingkatKegiatan = TingkatKegiatan::all();
-        $jenisKegiatan = JenisKegiatan::all();
-        $kegiatan = Kegiatan::where('verif', '!=', 'true')->get();
-        return view('kegiatan_not_verified', compact('kegiatan', 'poin' ,'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
+        $kegiatan = Kegiatan::with(['poin', 'posisi', 'tingkatKegiatan', 'jenisKegiatan' ])->where('verif', '!=', 'true')->get();
+        return view('kegiatan_not_verified', compact('kegiatan'));
     }
 
     public function verifySelected(Request $request)
@@ -32,7 +28,7 @@ class kegiatanController extends Controller
         $ids = $request->input('selected_kegiatan', []);
         Kegiatan::whereIn('id_kegiatan', $ids)->update(['verif' => 'True']);
 
-        return redirect()->route('kegiatan_not_verified')->with('success', 'Kegiatan yang dipilih berhasil diverifikasi.');
+        return redirect()->route('kegiatan_not_verified')->with('success', 'Kegiatan berhasil diverifikasi.');
     }
 
     public function cancelSelected(Request $request)
@@ -40,6 +36,6 @@ class kegiatanController extends Controller
         $ids = $request->input('selected_kegiatan', []);
         Kegiatan::whereIn('id_kegiatan', $ids)->update(['verif' => 'False']);
 
-        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan yang dipilih berhasil dibatalkan.');
+        return redirect()->route('kegiatan.index')->with('success', 'Verfikasi kegiatan berhasil dibatalkan.');
     }
 }

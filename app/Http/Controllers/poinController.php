@@ -16,7 +16,6 @@ class poinController extends Controller{
         $posisi = Posisi::all();
         $tingkatKegiatan = TingkatKegiatan::all();
         $jenisKegiatan = JenisKegiatan::all();
-        // dd($data);
         return view('poin', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
     }
 

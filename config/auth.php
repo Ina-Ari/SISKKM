@@ -60,6 +60,7 @@ return [
     | be assigned to any extra authentication guards you have defined.
     |
     | Supported: "database", "eloquent"
+    */
 
     'providers' => [
         'users' => [
@@ -71,7 +72,7 @@ return [
             'model'     => env('AUTH_MODEL', App\Models\AuthAdmin::class),
         ],
     ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords

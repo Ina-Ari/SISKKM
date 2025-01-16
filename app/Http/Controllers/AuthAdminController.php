@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\DB;
+use App\Models\Mahasiswa;
+use App\Models\Kegiatan;
 
 class AuthAdminController extends Controller
 {
@@ -16,7 +19,11 @@ class AuthAdminController extends Controller
 
     function indexAdmin()
     {
-        return view('indexAdmin');
+        $jumlahKegiatan = Kegiatan::count();
+        $terverifikasi = Kegiatan::where('verif', 'true')->count();
+        $belumterverifikasi = Kegiatan::where('verif', 'false')->count();
+        $jumlahMahasiswa = Mahasiswa::has('kegiatan')->count();
+        return view('dashboard', compact('jumlahKegiatan','terverifikasi','belumterverifikasi','jumlahMahasiswa'));
     }
 
     function daftarKegiatan()
@@ -40,7 +47,22 @@ class AuthAdminController extends Controller
             // Jika login berhasil, reset rate limiter dan buat session baru
             // Auth::user()->admin;
             RateLimiter::clear($key);  // Reset percobaan login
+
+            // Hitung total kegiatan yang diajukan oleh mahasiswa
+            $totalMhs = DB::table('mahasiswa')->count();
+
+            $totalVerifTrue = DB::table('kegiatan')
+            ->where('verifsertif', 'true')
+            ->count();
+
+            $totalVerifFalse = DB::table('kegiatan')
+            ->where('verifsertif', 'false')
+            ->count();
+
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
+            $request->session()->put('totalMhs', $totalMhs);
+            $request->session()->put('totalVerifTrue', $totalVerifTrue);
+            $request->session()->put('totalVerifFalse', $totalVerifFalse);
             return redirect()->route('indexAdmin');
         } else {
             // Jika login gagal, tambahkan percobaan login
