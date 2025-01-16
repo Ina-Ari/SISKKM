@@ -10,20 +10,18 @@
   <!-- Navbar -->
   @include('partial.navbar')
   <!-- /.navbar -->
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
-  <!-- Sidebar-->
+  <!-- Main Sidebar Container -->
   @include('partial.sidebar')
 
-  <!-- Content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @yield('content')
   </div>
 </div>
+<!-- ./wrapper -->
 
-<!-- Script -->
+<!-- jQuery -->
     @include('partial.script')
 </body>
 </html>

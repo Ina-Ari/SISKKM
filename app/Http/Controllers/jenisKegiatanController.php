@@ -10,11 +10,7 @@ class jenisKegiatanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // $data = JenisKegiatan::get();
-        // return view('jenis_kegiatan', compact('data'));
-
+    public function index(){
         $data = JenisKegiatan::all();
         return view('jenis_kegiatan', compact('data'));
     }

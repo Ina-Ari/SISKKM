@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Mahasiswa;
+use App\Models\Kegiatan;
 
 class dashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        return view('dashboard');
+        $jumlahKegiatan = Kegiatan::count();
+        $terverifikasi = Kegiatan::where('verif', 'true')->count();
+        $belumterverifikasi = Kegiatan::where('verif', 'false')->count();
+        $jumlahMahasiswa = Mahasiswa::has('kegiatan')->count();
+
+        return view('dashboard', compact('jumlahKegiatan','terverifikasi','belumterverifikasi','jumlahMahasiswa'));
+
     }
 
     /**

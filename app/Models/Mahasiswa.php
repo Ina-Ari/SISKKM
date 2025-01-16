@@ -36,4 +36,9 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Jurusan::class, 'kode_jurusan');
     }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'nim');
+    }
 }

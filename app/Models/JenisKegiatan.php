@@ -19,5 +19,4 @@ class JenisKegiatan extends Model
     {
         return $this->hasMany(Poin::class, 'idjenis_kegiatan');
     }
-
 }

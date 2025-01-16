@@ -5,18 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Poin extends Model
+class Kegiatan extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id_poin';
-    protected $table = 'poin';
-    public $timestamps = false;
+
+    protected $table = 'kegiatan'; // Nama tabel kegiatan
+    //tambah
+    protected $primaryKey = 'id_kegiatan'; // Menentukan kolom primary key
+
+    // Nonaktifkan timestamps
+    public $timestamps = false; // Tambahkan ini
+
     protected $fillable = [
+        'nim',
+        'nama_kegiatan',
+        'tanggal_kegiatan',
+        'id_poin',
         'id_posisi',
         'idtingkat_kegiatan',
         'idjenis_kegiatan',
-        'poin'
+        'sertifikat',
+        'verifsertif',
+        'verif'
     ];
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim');
+    }
 
     public function posisi()
     {
@@ -33,9 +49,8 @@ class Poin extends Model
         return $this->belongsTo(JenisKegiatan::class, 'idjenis_kegiatan');
     }
 
-    public function kegiatan()
+    public function poin()
     {
-        return $this->hasMany(Kegiatan::class, 'id_poin');
+        return $this->belongsTo(Poin::class, 'id_poin');
     }
-
 }

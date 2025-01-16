@@ -16,7 +16,7 @@
         <thead>
         <tr>
             <th>No.</th>
-            <th>Posis</th>
+            <th>Posisi</th>
             <th>Aksi</th>
         </tr>
         </thead>
