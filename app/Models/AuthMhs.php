@@ -75,7 +75,7 @@ class AuthMhs extends Authenticatable
      */
     public function prodi()
     {
-        return $this->belongsTo(prodi::class, 'kode_prodi');
+        return $this->belongsTo(Prodi::class, 'kode_prodi');
     }
 
     /**
@@ -85,6 +85,6 @@ class AuthMhs extends Authenticatable
      */
     public function jurusan()
     {
-        return $this->belongsTo(jurusan::class, 'kode_jurusan');
+        return $this->belongsTo(Jurusan::class, 'kode_jurusan');
     }
 }

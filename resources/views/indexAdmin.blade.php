@@ -34,7 +34,7 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-6"> 
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">

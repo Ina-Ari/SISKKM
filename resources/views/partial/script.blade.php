@@ -62,23 +62,33 @@
     });
 
   </script>
+
 <script>
-    document.getElementById('btnCancelSelected').addEventListener('click', function() {
-        document.getElementById('formCancel').submit();
-    });
-    document.getElementById('btnCancelAll').addEventListener('click', function() {
-        document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
-        document.getElementById('formCancel').submit();
-    });
+  document.getElementById('btnCancelSelected').addEventListener('click', function() {
+      if (confirm('Apakah Anda yakin ingin membatalkan kegiatan yang dipilih?')) {
+          document.getElementById('formCancel').submit();
+      }
+  });
+  document.getElementById('btnCancelAll').addEventListener('click', function() {
+      if (confirm('Apakah Anda yakin ingin membatalkan semua kegiatan?')) {
+          document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
+          document.getElementById('formCancel').submit();
+      }
+  });
 </script>
 
 <script>
-    document.getElementById('btnVerifSelected').addEventListener('click', function() {
-        document.getElementById('formVerify').submit();
-    });
-    document.getElementById('btnVerifAll').addEventListener('click', function() {
-        document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
-        document.getElementById('formVerify').submit();
-    });
+  document.getElementById('btnVerifSelected').addEventListener('click', function() {
+      if (confirm('Apakah Anda yakin ingin memverifikasi kegiatan yang dipilih?')) {
+          document.getElementById('formVerify').submit();
+      }
+  });
+
+  document.getElementById('btnVerifAll').addEventListener('click', function() {
+      if (confirm('Apakah Anda yakin ingin memverifikasi semua kegiatan?')) {
+          document.querySelectorAll('input[name="selected_kegiatan[]"]').forEach(checkbox => checkbox.checked = true);
+          document.getElementById('formVerify').submit();
+      }
+  });
 </script>
 

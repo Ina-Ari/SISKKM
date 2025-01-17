@@ -47,6 +47,11 @@
                     </div>
                 </div>
             </div>
+            @if ($errors->has('password'))
+              <div class="alert alert-danger">
+                  {{ $errors->first('password') }}
+              </div>
+            @endif
             <input type="hidden" name="token" value="{{ $token }}">
             <input type="hidden" name="email" value="{{ $email }}">
             <div class="row">

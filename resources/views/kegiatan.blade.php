@@ -11,8 +11,12 @@
             <h3 class="m-0">Kegiatan Terverifikasi</h3>
         </div>
         <div class="col-sm-6 text-right">
-            <button id="btnCancelSelected" class="btn btn-danger btn-sm">Cancel</button>
-            <button id="btnCancelAll" class="btn btn-warning btn-sm">Cancel All</button>
+            <button id="btnCancelSelected" type="button" class="btn btn-sm btn-danger">
+                <i class="fas fa-times-circle"></i> Cancel
+            </button>
+            <button id="btnCancelAll" type="button" class="btn btn-sm btn-warning">
+                <i class="fas fa-ban"></i> Cancel All
+            </button>
     </div>
 </div>
     <div class="card-body">
@@ -36,7 +40,9 @@
                         <td>{{ $data->nim }}</td>
                         <td>{{ $data->nama_kegiatan }}</td>
                         <td>{{ $data->tanggal_kegiatan }}</td>
-                        <td>Terverifikasi</td>
+                        <td>
+                            <span class="badge badge-success">Terverifikasi</span>
+                        </td>
                         <td style="text-align: center; vertical-align: middle;">
                             <input type="checkbox" name="selected_kegiatan[]" value="{{ $data->id_kegiatan }}">
                         </td>
@@ -47,5 +53,3 @@
     </div>
 </div>
 @endsection
-
-

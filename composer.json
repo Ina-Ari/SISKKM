@@ -8,15 +8,7 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.31",
-<<<<<<< HEAD
         "laravel/tinker": "^2.9"
-=======
-
-        "laravel/tinker": "^2.9",
-        "symfony/http-client": "^7.2",
-        "symfony/mailgun-mailer": "^7.2"
-
->>>>>>> 246e45263fa99c243947aaa12f95fa4833236f4a
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

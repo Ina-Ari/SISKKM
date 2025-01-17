@@ -12,13 +12,14 @@ use App\Http\Controllers\poinController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\formControl;
 use Illuminate\Routing\Route as RoutingRoute;
 
-// Route::get('/', function () {
+// Route::get('/', function () { 
 //     return view('master');
 // });
 
-Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
+// Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
 Route::get('kegiatan/not-verified', [KegiatanController::class, 'notVerified'])->name('kegiatan_not_verified');
 Route::post('kegiatan/verify-selected', [KegiatanController::class, 'verifySelected'])->name('kegiatan.verify_selected');
@@ -38,6 +39,7 @@ Route::get('/logout', [AuthAdminController::class, 'logout'])->name('logout');
 Route::get('/loginmhs', [AuthMhsController::class, 'loginmhs'])->name('loginmhs');
 Route::post('/loggedinmhs', [AuthMhsController::class, 'loggedinmhs'])->name('loggedinmhs')->middleware('throttle:5,1');
 Route::get('/indexMahasiswa', [AuthMhsController::class, 'indexMhs'])->name('indexMhs');
+Route::get('/profilMhs', [AuthMhsController::class, 'profilMhs'])->name('profilMhs');
 Route::get('/emailSubmit', [AuthMhsController::class, 'emailSubmit'])->name('emailSubmit');
 Route::post('/sendEmail',[MailController::class, 'sendEmail'])->name('sendMail');
 Route::get('/emailConf', [AuthMhsController::class, 'emailConf'])->name('emailConf');
@@ -55,5 +57,17 @@ Route::resource('jenisKegiatan', jenisKegiatanController::class);
 Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
 Route::resource('posisi', posisiController::class);
 Route::resource('poin', poinController::class);
+
+//routing kegiatan
+Route::resource('jenisKegiatan', jenisKegiatanController::class);
+Route::resource('tingkatKegiatan', tingkatKegiatanController::class);
+Route::resource('posisi', posisiController::class);
+Route::resource('poin', poinController::class);
+Route::resource('form', formControl::class);
+Route::get('/dashboardMhs', [formControl::class,'indexMahasiswa'])->name('dashboardMhs');
+Route::get('/form', function () {
+    return view('form');
+});
+Route::post('/tambahKegiatan', [formControl::class, 'store'])->name('form.store');
 ?>
 

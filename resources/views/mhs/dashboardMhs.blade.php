@@ -1,112 +1,285 @@
 @extends('mhs.masterMhs')
 
-@section('title', 'Dashboard')
+@section('title', 'Dashboard Mahasiswa')
 
 @section('content')
     <!-- Content Header (Page header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
-            </div>
-            <!-- /.col -->
-          </div><!-- /.row -->
+          <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-info"></i> Selamat Datang di SIPRAJA!</h5>
+            SIPRAJA (Sistem Informasi Perekapan Aktivitas dan Jejak Mahasiswa) adalah platform yang membantu mahasiswa merekap poin SKKM dengan mudah. <br>Jangan lewatkan kesempatan untuk terus aktif, karena poin yang kamu kumpulkan adalah cerminan dari usahamu dalam mengembangkan diri!
+          </div>
+
         </div>
         <div class="col-sm-6">
             <h2 class="m-0">Selamat Datang, {{ session('nama') }}</h2>
-        </div><!-- /.container-fluid -->
-    </div>
-     <!-- /.content-header -->
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3>{{ session('totalKegiatan', 0) }}</h3>
-                  <p>Kegiatan Diikuti</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>{{ session('totalVerifTrue', 0) }}</h3>
-                  <p>Kegiatan Terverifikasi</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>{{ session('totalVerifFalse', 0) }}</h3>
-                  <p>Kegiatan Belum Terverifikasi</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3>10/28</h3>
-                  <p>Poin Terkumpul</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-          </div><!-- /.container-fluid -->
         </div>
-        <table id="example1" class="table table-bordered table-striped">
-          <thead>
-              <tr>
-                  <th>Nama Kegiatan</th>
-                  <th>Tanggal Kegiatan</th>
-                  <th>Jumlah Poin</th>
-                  <th>Posisi Kegiatan</th>
-                  <th>Tingkatan Kegiatan</th>
-                  <th>Status Verifikasi</th>
-              </tr>
-          </thead>
-          <tbody>
-              @foreach (session('kegiatan', []) as $item)
-                  <tr>
-                      <td>{{ $item->nama_kegiatan }}</td>
-                      <td>{{ $item->tanggal_kegiatan }}</td>
-                      <td>{{ $item->poin }}</td>
-                      <td>{{ $item->nama_posisi }}</td>
-                      <td>{{ $item->tingkat_kegiatan }}</td>
-                      <td>
-                        @if ($item->verifsertif === 'true')
-                            Terverifikasi
-                        @else
-                            Belum Terverifikasi
-                        @endif
-                    </td>
-                  </tr>
-              @endforeach
-          </tbody>
-      </table>
-      </section>
-      <!-- /.content -->
+    </div>
+    <!-- /.content-header -->
+    
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            {{-- <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#formKegiatanModal">
+                + Kegiatan
+            </button> --}}
+
+            <!-- Modal -->
+            <div class="modal fade" id="formKegiatanModal" tabindex="-1" role="dialog" aria-labelledby="formKegiatanLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="formKegiatanLabel">Form Kegiatan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Success message -->
+                            @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <!-- Error message -->
+                            @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <!-- Form -->
+                            <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 bg-white shadow-sm">
+                                @csrf
+
+                                <!-- Nim -->
+                                <div class="form-group">
+                                    <input type="text" id="Nim" name="Nim" class="form-control" value="{{$nim}}" placeholder="Nim" required disabled hidden>
+                                      <input type="hidden" name="Nim" value="{{$nim}}">
+                                   @error('Nim')
+                                       <small class="text-danger">{{ $message }}</small>
+                                      @enderror
+                                </div>
+                                <!-- Nama Kegiatan -->
+                                <div class="form-group">
+                                    <label for="Nama_kegiatan">Nama Kegiatan:</label>
+                                    <input type="text" id="Nama_kegiatan" name="Nama_kegiatan" class="form-control" 
+                                        value="{{ old('Nama_kegiatan') }}" placeholder="Masukkan nama kegiatan" required>
+                                    @error('Nama_kegiatan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <!-- Tanggal Kegiatan -->
+                                <div class="form-group">
+                                    <label for="tanggal_kegiatan">Tanggal Kegiatan:</label>
+                                    <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" class="form-control" 
+                                        value="{{ old('tanggal_kegiatan') }}" required>
+                                    @error('tanggal_kegiatan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <!-- Dropdown Posisi -->
+                                <div class="form-group">
+                                    <label for="id_posisi">Posisi:</label>
+                                    <select name="id_posisi" id="id_posisi" class="form-control" required>
+                                        <option value="">Pilih Posisi</option>
+                                        @foreach ($posisi as $item)
+                                            <option value="{{ $item->id_posisi }}">{{ $item->nama_posisi }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Dropdown Tingkat Kegiatan -->
+                                <div class="form-group">
+                                    <label for="idtingkat_kegiatan">Tingkat Kegiatan:</label>
+                                    <select name="idtingkat_kegiatan" id="idtingkat_kegiatan" class="form-control" required>
+                                        <option value="">Pilih Tingkat Kegiatan</option>
+                                        @foreach ($tingkatKegiatan as $item)
+                                            <option value="{{ $item->idtingkat_kegiatan }}">{{ $item->tingkat_kegiatan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Dropdown Jenis Kegiatan -->
+                                <div class="form-group">
+                                    <label for="idjenis_kegiatan">Jenis Kegiatan:</label>
+                                    <select name="idjenis_kegiatan" id="idjenis_kegiatan" class="form-control" required>
+                                        <option value="">Pilih Jenis Kegiatan</option>
+                                        @foreach ($jenisKegiatan as $item)
+                                            <option value="{{ $item->idjenis_kegiatan }}">{{ $item->jenis_kegiatan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Sertifikat -->
+                                <div class="form-group">
+                                    <label for="sertifikat">Upload Sertifikat:</label>
+                                    <input type="file" id="sertifikat" name="sertifikat" class="form-control-file" 
+                                        accept=".pdf,.jpg,.jpeg,.png" required>
+                                    @error('sertifikat')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary btn-block">Simpan Kegiatan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                  <div class="col-lg-3 col-md-6 col-12 mb-4">
+                      <!-- small box -->
+                      <div class="small-box" style="background-color: #0056b3; color: white;">
+                          <div class="inner">
+                              <h3>{{ session('totalKegiatan', 0) }}</h3>
+                              <p>Kegiatan Diikuti</p>
+                          </div>
+                          <div class="icon">
+                              <i class="fas fa-users"></i>
+                          </div>
+                          
+                      </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-6">
+                      <!-- small box -->
+                      <div class="small-box" style="background-color: #28a745; color: white;">
+                          <div class="inner">
+                              <h3>{{ session('totalVerifTrue', 0) }}</h3>
+                              <p>Kegiatan Terverifikasi</p>
+                          </div>
+                          <div class="icon">
+                              <i class="fas fa-check-circle"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-lg-3 col-6">
+                      <!-- small box -->
+                      <div class="small-box" style="background-color: #ffc107; color: black;">
+                          <div class="inner">
+                              <h3>{{ session('totalVerifFalse', 0) }}</h3>
+                              <p>Kegiatan Belum Terverifikasi</p>
+                          </div>
+                          <div class="icon">
+                              <i class="fas fa-exclamation-circle"></i>
+                          </div>
+                          {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              {{-- Detail Kegiatan --}}
+              <div class="col-sm-6">
+                <h2 class="m-0">Detail Kegiatan</h2>
+              </div>
+              <div class="container-fluid" style="margin-top:10px;">
+                <div class="row">
+                  <div class="col-md-3 col-sm-6">
+                      <div class="info-box" style="background-color: #f0f8ff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 100%; height: 90px;">
+                          <span class="info-box-icon" style="background-color: #0056b3; color: white; border-radius: 50%; padding: 10px; font-size: 25px;">
+                              <i class="fas fa-trophy"></i> <!-- Elegant trophy icon -->
+                          </span>
+    
+                          <div class="info-box-content" style="padding-left: 15px; padding-right: 15px;">
+                              <span class="info-box-text" style="font-size: 0.9rem; font-weight: bold; color: #0056b3; word-wrap: break-word;">Total Poin</span>
+                              @php
+                              $totalPoin = session('totalPoin', 0);
+                              $textColor = '#dc3545'; // Default warna merah (poin rendah)
+                          
+                              if ($totalPoin >= 20) {
+                                  $textColor = '#28a745'; // Hijau (poin tinggi)
+                              } elseif ($totalPoin >= 10) {
+                                  $textColor = '#ffc107'; // Kuning (poin sedang)
+                              }
+                              @endphp
+                              <span class="info-box-number" style="font-size: 1.3rem; font-weight: bold; color: {{ $textColor }};">
+                                {{ session('totalPoin', 0) }} / 28 Poin Terkumpul
+                              </span>
+                              <div class="progress" style="height: 6px; background-color: #e9ecef; margin-top: 5px;">
+                                  <div class="progress-bar" style="width: {{ min(100, (session('totalPoin', 0) / 28) * 100) }}%; background-color: {{ $textColor }};"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-3 col-sm-6" >
+                    <div class="info-box" style="background-color: #f0f8ff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 100%; height: 90px;">
+                        <span class="info-box-icon" style="background-color: #0056b3; color: white; border-radius: 50%; padding: 10px; font-size: 25px;">
+                            <i class="fas fa-plus"></i> <!-- Elegant trophy icon -->
+                        </span>
+  
+                        <div class="info-box-content" style="padding-left: 15px; padding-right: 15px;">
+                            <span class="info-box-text" style="font-size: 1rem; font-weight: bold; color: #0056b3; word-wrap: break-word;">Ajukan Kegiatan</span>
+                            {{-- <span class="info-box-number" style="font-size: 1.3rem; font-weight: bold; color: #28a745;">Hehee</span> --}}
+                            <button type="button" class="btn btn-block btn-outline-primary btn-sm" data-toggle="modal" data-target="#formKegiatanModal" title="Tambahkan Kegiatan">Tambah Kegiatan</button>
+                        </div>
+                    </div>
+                </div>
+
+                  {{-- <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                      <div class="inner" style="padding: 3%">
+                        <h4><b>Tambah Kegiatan</b></h4>
+                        <p>Masukkan Detail Kegiatan Baru</p>
+                      </div>
+                      <div class="icon" data-toggle="modal" data-target="#formKegiatanModal" title="Tambahkan Kegiatan">
+                        <i class="ion ion-person-add"></i>
+                      </div>
+                    </div>
+                    </div> --}}
+                  </div>
+
+                  {{-- Table --}}
+                  <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nama Kegiatan</th>
+                            <th>Tanggal Kegiatan</th>
+                            <th>Jumlah Poin</th>
+                            <th>Posisi Kegiatan</th> 
+                            <th>Tingkatan Kegiatan</th>
+                            <th>Status Verifikasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (session('kegiatan', []) as $item)
+                            <tr>
+                                <td>{{ $item->nama_kegiatan }}</td>
+                                <td>{{ $item->tanggal_kegiatan }}</td>
+                                <td>{{ $item->poin }}</td>
+                                <td>{{ $item->nama_posisi }}</td>
+                                <td>{{ $item->tingkat_kegiatan }}</td>
+                                <td>
+                                  @if ($item->verif === 'true')
+                                  <span class="badge badge-success">Terverifikasi</span>
+                                  @else
+                                    <span class="badge badge-danger">Belum Terverifikasi</span>
+                                  @endif
+                              </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>
+    </section>
 @endsection

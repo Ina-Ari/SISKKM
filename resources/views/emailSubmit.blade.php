@@ -21,7 +21,7 @@
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
-    <div class="card-header text-center">
+    <div class="card-header text-center"> 
       <a href="../../index2.html" class="h1">
         <b>SIPRAJA</b><br/>
         <h4>Politeknik Negeri Bali</h4>
@@ -39,6 +39,16 @@
               </div>
             </div>
           </div>
+          @error('email')
+              <div class="alert alert-danger">
+                  {{ $message }}
+              </div>
+          @enderror
+          @if (session('error'))
+          <div class="alert alert-success">
+              {{ session('error') }}
+          </div>
+          @endif
           <div class="row">
             <!-- /.col -->
             <div class="col-4">

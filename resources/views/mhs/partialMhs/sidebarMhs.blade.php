@@ -22,22 +22,25 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="{{ route('indexMhs') }}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item menu-open">
-            <a href="{{ route('logoutmhs') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Logout
-              </p>
-            </a>
-          </li>
+               <li class="nav-item">
+                <a href="{{ route('indexMhs') }}" class="nav-link {{ request()->routeIs('indexMhs') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('profilMhs') }}" class="nav-link {{ request()->routeIs('profilMhs') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-user-alt"></i>
+                    <p>Profile</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('logoutmhs') }}" class="nav-link ">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
+                </a>
+            </li>
+            
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
