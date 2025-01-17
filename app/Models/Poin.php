@@ -33,4 +33,9 @@ class Poin extends Model
         return $this->belongsTo(JenisKegiatan::class, 'idjenis_kegiatan');
     }
 
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'id_poin');
+    }
+
 }

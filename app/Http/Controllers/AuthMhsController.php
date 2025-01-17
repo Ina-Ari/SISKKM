@@ -25,7 +25,21 @@ class AuthMhsController extends Controller
 
     function profilMhs()
     {   
-        return view('mhs.profileMhs');
+        if (!session()->has('nama')) {
+            return redirect()->route('loginmhs');
+        }
+    
+        $nim = session('nim');
+    
+        // Ambil data mahasiswa berdasarkan nim dari sesi
+        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+    
+        if (!$mahasiswa) {
+            // Jika data mahasiswa tidak ditemukan, redirect ke halaman login
+            return redirect()->route('loginmhs')->withErrors(['error' => 'Mahasiswa tidak ditemukan.']);
+        }
+        
+        return view('mhs.profileMhs', compact('mahasiswa', 'nim'));
     } 
 
     public function indexMhs()
@@ -33,9 +47,18 @@ class AuthMhsController extends Controller
         if (!session()->has('nama')) {
             return redirect()->route('loginmhs');
         }
+    
+        $nim = session('nim');
+    
+        // Ambil data mahasiswa berdasarkan nim dari sesi
+        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+    
+        if (!$mahasiswa) {
+            // Jika data mahasiswa tidak ditemukan, redirect ke halaman login
+            return redirect()->route('loginmhs')->withErrors(['error' => 'Mahasiswa tidak ditemukan.']);
+        }
 
         // $nim = session('login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d');
-        $nim = session('nim');
 
         $kegiatan = DB::table('kegiatan')
             ->join('tingkat_kegiatan', 'kegiatan.idtingkat_kegiatan', '=', 'tingkat_kegiatan.idtingkat_kegiatan')
@@ -45,6 +68,26 @@ class AuthMhsController extends Controller
             ->select('kegiatan.*', 'tingkat_kegiatan.tingkat_kegiatan', 'posisi.nama_posisi', 'poin.poin')
             ->get();
 
+        // Kalkulasi total poin untuk kegiatan yang terverifikasi
+        $totalPoin = $kegiatan->filter(function ($item) {
+            return $item->verif === 'True'; // Or use true if the data type is boolean
+        })->sum('poin');
+
+        // Hitung total kegiatan terverifikasi yang diajukan oleh mahasiswa
+        $totalVerifTrue = $kegiatan->filter(function ($item) {
+            return $item->verif === 'True'; // Or use true if the data type is boolean
+        })->count();
+
+        // Hitung total kegiatan yang diajukan oleh mahasiswa
+        $totalKegiatan = $kegiatan->count();
+
+        // Kalkulasi total kegiatan yang belum terverifikasi
+        $totalVerifFalse = $kegiatan->filter(function ($item) {
+            return $item->verif === 'False'; // Or use false if the data type is boolean
+        })->count();
+
+        $jenjang_pendidikan = $mahasiswa->jenjang_pendidikan;
+
         //dd(session()->all());
         // dd($nim);
 
@@ -52,24 +95,10 @@ class AuthMhsController extends Controller
         $tingkatKegiatan = TingkatKegiatan::all();
         $jenisKegiatan = JenisKegiatan::all();
 
-        return view('mhs.dashboardMhs', compact('kegiatan', 'posisi', 'tingkatKegiatan', 'jenisKegiatan', 'nim'));
+        return view('mhs.dashboardMhs', compact('kegiatan', 'posisi', 'tingkatKegiatan', 'jenisKegiatan', 'nim', 'mahasiswa', 
+                                                'totalPoin', 'totalVerifTrue', 'totalKegiatan', 'totalVerifFalse', 'jenjang_pendidikan'));
     }
 
-
-    public function indexMahasiswa()
-    {
-        // $mahasiswa = session()->has('nim');
-        $data = Poin::with(['posisi', 'tingkatKegiatan', 'jenisKegiatan'])->get();
-        $posisi = Posisi::all(); // Data untuk dropdown posisi
-        $tingkatKegiatan = TingkatKegiatan::all();
-        $jenisKegiatan = JenisKegiatan::all();
-        // $kegiatan = Kegiatan::where('nim',$mahasiswa)->get();
-
-        // dd($posisi);
-        // dd($mahasiswa);
-
-        return view('mhs.dashboardMhs', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
-    }
 
     function confirmationMail()
     {
@@ -116,74 +145,32 @@ class AuthMhsController extends Controller
                 $user->save();
             }
 
-            // Login pengguna
+            // Login pengguna 
             Auth::login($user);
             RateLimiter::clear($key); // Reset percobaan login
 
-            $kegiatan = DB::table('kegiatan')
-            ->join('tingkat_kegiatan', 'kegiatan.idtingkat_kegiatan', '=', 'tingkat_kegiatan.idtingkat_kegiatan')
-            ->join('posisi', 'kegiatan.id_posisi', '=', 'posisi.id_posisi')
-            ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin')
-            ->where('kegiatan.nim', $user->nim)
-            ->select('kegiatan.*', 'tingkat_kegiatan.tingkat_kegiatan', 'posisi.nama_posisi', 'poin.poin')
-            ->get();
-        
-            // Kalkulasi total poin untuk kegiatan yang terverifikasi
-            $totalPoin = $kegiatan->filter(function ($item) {
-                return $item->verif === 'true'; // Atau gunakan true jika tipe data adalah boolean
-            })->sum('poin');
-
             // Ambil data mahasiswa dari model berdasarkan nim
-            $mahasiswa = AuthMhs::where('nim', $user->nim)->first();
-
-            // Simpan data kegiatan ke session
-            $request->session()->put('kegiatan', $kegiatan);
-
-
-            // Hitung total kegiatan terverifikasi yang diajukan oleh mahasiswa
-            $totalVerifTrue = DB::table('kegiatan')
-                ->where('verif', 'true')
-                ->where('nim', $user->nim) // Perbaiki query: tambahkan kondisi 'nim' sebagai filter
-                ->count();
-
-            $totalVerifFalse = DB::table('kegiatan')
-                ->where('verif', 'false')
-                ->where('nim', $user->nim) // Perbaiki query: tambahkan kondisi 'nim' sebagai filter
-                ->count();
-
-            // Hitung total kegiatan yang diajukan oleh mahasiswa
-            $totalKegiatan = DB::table('kegiatan')
-                ->where('nim', $user->nim)
-                ->count();
+            $mahasiswa = Mahasiswa::where('nim', $user->nim)->first();
+            
+            // Regenerasi sesi
+            $request->session()->regenerate(); 
 
             // Simpan value yang diperlukan untuk session mahasiswa
-
-            $request->session()->regenerate(); // Regenerasi sesi
-            session(['totalPoin' => $totalPoin]);
-            $minimalPoin = 28;
-            $progress = min(100, ($totalPoin / $minimalPoin) * 100);
             $request->session()->put([
-                'nim' => $user->nim,
-                'nama' => $user->nama,
-                'email' => $user->email,
-                'no_telepon' => $user->no_telepon,
-                'jenjang_pendidikan' => $user->jenjang_pendidikan,
-                'angkatan' => $user->angkatan,
-                'totalVerifTrue' => $totalVerifTrue,
-                'totalVerifFalse' => $totalVerifFalse,
-                'totalKegiatan' => $totalKegiatan,
+                'nim' => $mahasiswa->nim,
+                'nama' => $mahasiswa->nama,
             ]);
-
-            // Pastikan nim diset setelah regenerasi session
 
             // Redirect ke halaman mahasiswa
             return redirect()->route('indexMhs');
+
         } else {
             // Jika login gagal, tambahkan hit ke RateLimiter
             RateLimiter::hit($key, 60); // Tambah percobaan, reset setelah 60 detik
             return redirect()->back()->with('gagal', 'NIM atau password anda salah');
         }
     }
+
 
     // Logout method for 'mahasiswa'
     public function logoutMhs(Request $request)

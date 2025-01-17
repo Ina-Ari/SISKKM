@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\DB;
+use App\Models\Mahasiswa;
+use App\Models\Kegiatan;
 
-class AuthAdminController extends Controller 
+class AuthAdminController extends Controller
 {
     function login()
     {
@@ -17,13 +19,17 @@ class AuthAdminController extends Controller
 
     function indexAdmin()
     {
-        return view('indexAdmin');
-    } 
+        $jumlahKegiatan = Kegiatan::count();
+        $terverifikasi = Kegiatan::where('verif', 'true')->count();
+        $belumterverifikasi = Kegiatan::where('verif', 'false')->count();
+        $jumlahMahasiswa = Mahasiswa::has('kegiatan')->count();
+        return view('dashboard', compact('jumlahKegiatan','terverifikasi','belumterverifikasi','jumlahMahasiswa'));
+    }
 
     function daftarKegiatan()
     {
         return view('daftarkegiatan');
-    } 
+    }
 
     function loggedin(Request $request)
     {
@@ -39,6 +45,7 @@ class AuthAdminController extends Controller
         // Cek kredensial dengan guard 'admin'
         if (Auth::guard('admin')->attempt($request->only('username', 'password'))) {
             // Jika login berhasil, reset rate limiter dan buat session baru
+            // Auth::user()->admin;
             RateLimiter::clear($key);  // Reset percobaan login
 
             // Hitung total kegiatan yang diajukan oleh mahasiswa
@@ -55,7 +62,7 @@ class AuthAdminController extends Controller
             $request->session()->regenerate();  // Regenerasi session untuk mencegah session fixation
             $request->session()->put('totalMhs', $totalMhs);
             $request->session()->put('totalVerifTrue', $totalVerifTrue);
-            $request->session()->put('totalVerifFalse', $totalVerifFalse);  
+            $request->session()->put('totalVerifFalse', $totalVerifFalse);
             return redirect()->route('indexAdmin');
         } else {
             // Jika login gagal, tambahkan percobaan login
@@ -68,13 +75,13 @@ class AuthAdminController extends Controller
     {
         // Log out the authenticated user
         Auth::guard('admin')->logout();
-    
+
         // Invalidate the session
         $request->session()->invalidate();
-    
+
         // Regenerate the CSRF token to prevent session fixation
         $request->session()->regenerateToken();
-    
+
         // Redirect to the login page
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }

@@ -33,7 +33,7 @@ class posisiController extends Controller
         ]);
 
         Posisi::create($request->all());
-        return redirect()->back()->with('success', 'posis berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'posisi berhasil ditambahkan.');
     }
 
     /**

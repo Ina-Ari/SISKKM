@@ -22,10 +22,11 @@ class Mahasiswa extends Model
         'kode_jurusan',
         'alamat',
         'email',
-        'password'
+        'password',
+        'profile'
     ];
-
-
+ 
+ 
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'kode_prodi');
@@ -34,5 +35,10 @@ class Mahasiswa extends Model
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class, 'kode_jurusan');
+    }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'nim');
     }
 }

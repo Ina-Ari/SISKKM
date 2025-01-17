@@ -46,6 +46,9 @@ Route::get('/emailConf', [AuthMhsController::class, 'emailConf'])->name('emailCo
 Route::get('/changepassword', [AuthMhsController::class, 'changepassword'])->name('changepassword');
 Route::post('/updatepassword', [AuthMhsController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/logoutmhs', [AuthMhsController::class, 'logoutmhs'])->name('logoutmhs');
+Route::get('/updateKegiatan', [AuthMhsController::class, 'updateKegiatan'])->name('updateKegiatan');
+
+
 
 
 //Routing Pages
@@ -69,5 +72,7 @@ Route::get('/form', function () {
     return view('form');
 });
 Route::post('/tambahKegiatan', [formControl::class, 'store'])->name('form.store');
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+Route::get('/mahasiswa/{id}/kegiatan', [MahasiswaController::class, 'kegiatan'])->name('mahasiswa.kegiatan');
 ?>
 

@@ -15,6 +15,7 @@ class Kegiatan extends Model
         'Nim',
         'Nama_kegiatan',
         'tanggal_kegiatan',
+        'id_poin',
         'id_posisi',
         'idtingkat_kegiatan',
         'idjenis_kegiatan',
@@ -24,9 +25,16 @@ class Kegiatan extends Model
         'verif',
     ];
 
+
     public $timestamps = false; // Menonaktifkan timestamps
 
     // Relasi dengan model Posisi
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim');
+    }
+
     public function posisi()
     {
         return $this->belongsTo(Posisi::class, 'id_posisi');
@@ -38,9 +46,16 @@ class Kegiatan extends Model
         return $this->belongsTo(TingkatKegiatan::class, 'idtingkat_kegiatan');
     }
 
+
     // Relasi dengan model JenisKegiatan
     public function jenisKegiatan()
     {
         return $this->belongsTo(JenisKegiatan::class, 'idjenis_kegiatan');
     }
+
+    public function poin()
+    {
+        return $this->belongsTo(Poin::class, 'id_poin');
+    }
+
 }

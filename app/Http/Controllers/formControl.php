@@ -9,7 +9,7 @@ use App\Models\kegiatan;
 use App\Models\TingkatKegiatan;
 use App\Models\Posisi;
 use App\Models\Poin;
-
+ 
 class formControl extends Controller
 {
 
@@ -23,6 +23,7 @@ class formControl extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function indexMahasiswa()
     {
         // $mahasiswa = session()->has('nim');

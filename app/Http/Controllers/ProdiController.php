@@ -15,7 +15,7 @@ class ProdiController extends Controller
             "HashCode" => "65020385BE01144F4187C2EB100D851C09CFD40F774BD629896E739C1D5EE156"
             // hashcode mhasiswa = 857FA947BC447C037C3CA7796D80395104AF7D165E46EB4398A616362E8D6E30
             ]
-        );
+        ); 
         $dataProdi = json_decode($prodi, true)["daftar"];
         $arrayProdi = [];
 

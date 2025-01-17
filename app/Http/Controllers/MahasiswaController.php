@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Mahasiswa;
 use App\Models\Jurusan;
 use App\Models\Prodi;
+use App\Models\Kegiatan;
 
 class MahasiswaController extends Controller
 {
@@ -18,11 +19,12 @@ class MahasiswaController extends Controller
             "HashCode" => "857FA947BC447C037C3CA7796D80395104AF7D165E46EB4398A616362E8D6E30"
             ]
         );
-
+ 
         $dataMahasiswa = json_decode($mahasiswa, true)["daftar"];
         $arrayMahasiswa = [];
+        $data = Mahasiswa::all();
 
-        for ($i=0; $i < 500; $i++) {
+        for ($i=0; $i < count($data); $i++) {
             $angkatan = $dataMahasiswa[$i]["tahunAkademik"];
             $nim = (int)$dataMahasiswa[$i]["nim"];
             $nama = $dataMahasiswa[$i]["nama"];
@@ -51,10 +53,63 @@ class MahasiswaController extends Controller
                         'password' => $nim
                     ]);
                 }
-            }
+            } 
         }
-        // dd($arrayMahasiswa[334]);
+        // // dd($arrayMahasiswa[334]);
         if(count($arrayMahasiswa)>0)Mahasiswa::insert($arrayMahasiswa);
         return true;
     }
+
+    public function index(Request $request)
+    {
+        $jurusan = Jurusan::all();
+
+        // Filter mahasiswa berdasarkan jurusan jika ada parameter 'jurusan'
+        $query = Mahasiswa::query();
+
+        if ($request->has('jurusan') && $request->jurusan != 'all') {
+            $query->where('kode_jurusan', $request->jurusan);
+        }
+
+        // Ambil data mahasiswa (dengan filter jika ada)
+        $data = $query->with(['prodi', 'jurusan'])->has('kegiatan')->get();
+
+        $status = [];
+
+        foreach ($data as $mahasiswa) {
+
+            $totalPoin = 0;
+
+            foreach ($mahasiswa->kegiatan as $kegiatan) {
+                if ($kegiatan->verif === 'True') {
+                    $totalPoin += $kegiatan->Poin->poin;
+                }
+            }
+
+            $keterangan = $totalPoin >= 28 ? 'Lulus' : 'Belum Lulus';
+
+            $status[$mahasiswa->nim] = $keterangan;
+        }
+
+        return view('daftarmahasiswa', compact('data', 'status', 'jurusan'));
+    }
+
+    public function kegiatan($id, Request $request)
+    {
+        $filter = $request->get('filter', 'all');
+
+        // Ambil data mahasiswa beserta kegiatan yang difilter
+        $query = Mahasiswa::with(['kegiatan' => function ($q) use ($filter) {
+            if ($filter === 'True') {
+                $q->where('verif', 'True');
+            } elseif ($filter === 'False') {
+                $q->where('verif', 'False');
+            }
+        }])->findOrFail($id);
+
+        return view('kegiatanmahasiswa', compact('query'))->with('filter', $filter);
+
+    }
+
+    
 }

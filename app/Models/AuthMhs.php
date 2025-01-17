@@ -9,8 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class AuthMhs extends Authenticatable
 {
     use HasFactory, Notifiable;
- 
-    /** 
+
+    /**
      * Nama tabel yang digunakan oleh model ini.
      *
      * @var string
@@ -43,7 +43,7 @@ class AuthMhs extends Authenticatable
         'email',
         'password',
     ];
-
+ 
     /**
      * Kolom yang harus disembunyikan dalam serialisasi.
      *

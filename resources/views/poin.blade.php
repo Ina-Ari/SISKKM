@@ -11,6 +11,9 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
         <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">+ New</button>
       <table id="example1" class="table table-bordered table-striped">
         <thead>

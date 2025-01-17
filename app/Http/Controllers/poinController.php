@@ -9,18 +9,16 @@ use App\Models\Posisi;
 use App\Models\Poin;
 
 class poinController extends Controller{
-    
+
     public function index()
     {
-
         $data = Poin::with(['posisi', 'tingkatKegiatan', 'jenisKegiatan' ])->get();
         $posisi = Posisi::all();
         $tingkatKegiatan = TingkatKegiatan::all();
         $jenisKegiatan = JenisKegiatan::all();
-        // dd($data);
         return view('poin', compact('data', 'posisi', 'tingkatKegiatan', 'jenisKegiatan'));
     }
-   
+
     public function store(Request $request)
     {
         $request->validate([
