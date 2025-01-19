@@ -10,6 +10,9 @@ use App\Models\TingkatKegiatan;
 use App\Models\Posisi;
 use App\Models\Poin;
 use App\Models\Mahasiswa;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
  
 class formControl extends Controller
 {
@@ -67,39 +70,27 @@ class formControl extends Controller
             'sertifikat' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
-        // Direktori tujuan
-        $destinationPath = public_path('image/sertifikat');
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0755, true);
+        // Simpan file sertifikat ke direktori public
+        $certificate = $request->file('sertifikat');
+        $certificatePath = $certificate->store('sertifikat', 'public');  // 'public' berarti di direktori storage/app/public
+
+        // Path absolut untuk script Python dan file sertifikat
+        $pythonScriptPath = base_path('resources/python/verify_certificate.py');
+        $certificateAbsolutePath = public_path('storage/' . $certificatePath); // Pastikan path file sesuai
+
+        // Menjalankan script Python dengan menggunakan perintah py (atau python, tergantung sistem)
+        $process = new Process(['py', $pythonScriptPath, $certificateAbsolutePath]); // Ganti 'python' dengan 'py' jika itu yang berfungsi
+        $process->run();
+
+        // Tangani error jika script Python gagal
+        if (!$process->isSuccessful()) {
+            // Jika Python script gagal, tangani dengan exception
+            throw new ProcessFailedException($process);
         }
 
-        // File sertifikat
-        $file = $request->file('sertifikat');
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $extension = $file->getClientOriginalExtension();
-        $fileName = $originalName . '.' . $extension;
-
-        // Pastikan nama file unik
-        $counter = 1;
-        while (file_exists($destinationPath . '/' . $fileName)) {
-            $fileName = $originalName . '_' . $counter++ . '.' . $extension;
-        }
-
-        // Pindahkan file ke folder tujuan
-        $file->move($destinationPath, $fileName);
-
-        // Path lengkap sertifikat
-        $filePath = 'image/sertifikat/' . $fileName;
-
-        // Path ke logo
-        $logoPath = public_path('image/logo_pnb.jpg');
-        $certificatePath = public_path($filePath);
-
-        // Jalankan skrip Python untuk verifikasi sertifikat
-        $output = shell_exec("python3 /path/to/your/detect_logo.py " . escapeshellarg($logoPath) . " " . escapeshellarg($certificatePath));
-
-        // Cek hasil dari skrip Python
-        $isVerified = trim($output) === "True";
+        // Ambil hasil dari output script Python (apakah sertifikat terverifikasi atau tidak)
+        $verificationResult = trim($process->getOutput());
+        $isVerified = $verificationResult === "Terverifikasi";
 
         // Log hasil verifikasi
         if ($isVerified) {
@@ -118,7 +109,6 @@ class formControl extends Controller
         if (!$poin) {
             return redirect()->back()->withErrors(['msg' => 'Poin tidak ditemukan untuk kombinasi yang diberikan.']);
         }
-        // dd($request->Nim);
 
         // Simpan data ke database
         Kegiatan::create([
@@ -128,12 +118,11 @@ class formControl extends Controller
             'id_posisi' => $request->id_posisi,
             'idtingkat_kegiatan' => $request->idtingkat_kegiatan,
             'idjenis_kegiatan' => $request->idjenis_kegiatan,
-            'sertifikat' => $filePath,
+            'sertifikat' => 'storage/' . $certificatePath, // Simpan path relatif
             'verifsertif' => $isVerified,
             'verif' => false,
             'id_poin' => $poin->id_poin,
         ]);
-        
 
         return redirect()->route('indexMhs')->with('success', 'Kegiatan berhasil disimpan.');
     }
