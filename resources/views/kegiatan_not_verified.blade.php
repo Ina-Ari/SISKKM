@@ -11,15 +11,14 @@
                     <h3 class="m-0">Kegiatan Belum Diverifikasi</h3>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <button id="btnVerifSelected" type="submit" class="btn btn-primary btn-sm">Verif</button>
-                    <button id="btnVerifAll" type="submit" class="btn btn-success btn-sm">Verif All</button>
+                    <button id="btnVerifSelected" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check"></i>Verif</button>
+                    <button id="btnVerifAll" type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-double"></i>Verif All</button>
                 </div>
             </div>
             <div class="card-body">
                 @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -39,10 +38,10 @@
                                 <td>{{ $data->nama_kegiatan }}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->tanggal_kegiatan)->translatedFormat('d F Y') }}</td>
                                 <td>
-                                    @if ($data->verifsertif === 'True')
+                                    @if ($data->verif === 'True')
                                         Terverifikasi
                                     @else
-                                        Belum Terverifikasi
+                                    <span class="badge badge-danger">Belum Terverifikasi</span>
                                     @endif
                                 </td>
                                 <td style="text-align: center;">

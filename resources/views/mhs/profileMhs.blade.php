@@ -11,9 +11,9 @@
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
               <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle"
-                     src="../../dist/img/user4-128x128.jpg"
-                     alt="User profile picture">
+                     <img class="profile-user-img img-fluid img-circle"
+                     src="{{ $mahasiswa->foto_profil ? asset('storage/' . $mahasiswa->foto_profil) : asset('../../dist/img/user4-128x128.jpg') }}"
+                     alt="User profile picture">                
               </div>
 
               <h2 class="text-center" style="font-size: 2rem; margin-top:5px;">{{ $mahasiswa->nama }}</h2>
@@ -60,7 +60,7 @@
                 </div>
                 <!-- /.row -->
               </div>
-              <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#formEditMahasiswaModal"><b>EDIT</b></a>
+              <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#formEditMhs"><b>EDIT</b></a>
             </div>
             <!-- /.card-body -->
           </div>
@@ -82,7 +82,7 @@
                     Alamat 
                     <span class="float-right">
                       @if(!empty($mahasiswa->alamat))
-                        <p>{{ $mahasiswa->alamat }}</p>
+                        {{ $mahasiswa->alamat }}
                       @else
                           -
                       @endif
@@ -99,116 +99,92 @@
     </div>
 </section>
 
-    {{-- <!-- Modal -->
-    <div class="modal fade" id="formEditMahasiswaModal" tabindex="-1" role="dialog" aria-labelledby="formKegiatanLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="formKegiatanLabel">Form Kegiatan</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <!-- Success message -->
-                  @if(session('success'))
-                      <div class="alert alert-success">
-                          {{ session('success') }}
-                      </div>
-                  @endif
-
-                  <!-- Error message -->
-                  @if($errors->any())
-                      <div class="alert alert-danger">
-                          <ul>
-                              @foreach ($errors->all() as $error)
-                                  <li>{{ $error }}</li>
-                              @endforeach
-                          </ul>
-                      </div>
-                  @endif
-
-                  <!-- Form -->
-                  <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 bg-white shadow-sm">
+        {{-- Modal Edit --}}
+        <div class="modal fade" id="formEditMhs" tabindex="-1" aria-labelledby="formEditMhsLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                  <form action="{{ route('form.update', $mahasiswa->nim) }}" method="POST" enctype="multipart/form-data">
                       @csrf
-
-                      <!-- Nama -->
-                      <div class="form-group">
-                          <input type="text" id="nama" name="nama" class="form-control" value="{{$nama}}" placeholder="Nama" required disabled hidden>
-                          <input type="hidden" name="Nim" value="{{$nim}}">
-                      @error('nama')
-                          <small class="text-danger">{{ $message }}</small>
-                          @enderror
+                      <div class="modal-header">
+                          <h3 class="modal-title" id="formEditMhsLabel">Edit Data Mahasiswa</h3>
                       </div>
-                      <!-- Nama Kegiatan -->
-                      <div class="form-group">
-                          <label for="Nama_kegiatan">Nama Kegiatan:</label>
-                          <input type="text" id="Nama_kegiatan" name="Nama_kegiatan" class="form-control" 
-                              value="{{ old('Nama_kegiatan') }}" placeholder="Masukkan nama kegiatan" required>
-                          @error('Nama_kegiatan')
-                              <small class="text-danger">{{ $message }}</small>
-                          @enderror
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="foto_profil" class="form-label">Foto Profil</label>
+                              <input type="file" class="form-control" id="foto_profil" name="foto_profil">
+                              @if ($mahasiswa->foto_profil)
+                                  <img id="fotoProfilPreview" src="{{ $mahasiswa->foto_profil ? asset('storage/' . $mahasiswa->foto_profil) : asset('../../dist/img/user4-128x128.jpg') }}" alt="Foto Profil" class="img-thumbnail mt-2" width="500">
+                              @else
+                                  <img id="fotoProfilPreview" src="{{ asset('../../dist/img/user4-128x128.jpg') }}" alt="Foto Profil" class="img-thumbnail mt-2" width="500">
+                              @endif
+                          </div>
+                          <div class="mb-3">
+                              <label for="nama" class="form-label">Nama</label>
+                              <input type="text" class="form-control" id="nama" name="nama" value="{{ $mahasiswa->nama }}" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="nim" class="form-label">NIM</label>
+                            <input type="text" id="nim" class="form-control" value="{{ $mahasiswa->nim }}" readonly style="background-color: #ffffff; border: 1px solid #ccc; color: #495057;">
+                          </div>
+                          <div class="mb-3">
+                              <label for="kelas" class="form-label">Kelas</label>
+                              <input type="text" class="form-control" id="kelas" name="kelas" value="{{ $mahasiswa->kelas }}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="no_telepon" class="form-label">No Telepon</label>
+                              <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="{{ $mahasiswa->no_telepon }}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="email" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="email" name="email" value="{{ $mahasiswa->email }}" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="jenjang_pendidikan" class="form-label">Jenjang Pendidikan</label>
+                            <input type="text" id="jenjang_pendidikan" class="form-control" value="{{ $mahasiswa->jenjang_pendidikan }}" readonly style="background-color: #ffffff; border: 1px solid #ccc; color: #495057;">
+                          </div>
+                          <div class="mb-3">
+                              <label for="kode_jurusan" class="form-label">Jurusan</label>
+                              <div class="mb-3">
+                                <input type="text" id="jurusan" class="form-control" value="{{ $mahasiswa->jurusan['nama_jurusan'] }}" readonly style="background-color: #ffffff; border: 1px solid #ccc; color: #495057;">
+                            </div>                            
+                            </select>   
+                          </div>
+                          <div class="mb-3">
+                              <label for="kode_prodi" class="form-label">Program Studi</label>
+                              <div class="mb-3">
+                                <input type="text" id="prodi" class="form-control" value="{{ $mahasiswa->prodi['nama_prodi'] }}" readonly style="background-color: #ffffff; border: 1px solid #ccc; color: #495057;">
+                            </div>
+                                                      
+                          </div>
+                          <div class="mb-3">
+                              <label for="alamat" class="form-label">Alamat</label>
+                              <textarea class="form-control" id="alamat" name="alamat" rows="3">{{ $mahasiswa->alamat }}</textarea>
+                          </div>
                       </div>
-
-                      <!-- Tanggal Kegiatan -->
-                      <div class="form-group">
-                          <label for="tanggal_kegiatan">Tanggal Kegiatan:</label>
-                          <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" class="form-control" 
-                              value="{{ old('tanggal_kegiatan') }}" required>
-                          @error('tanggal_kegiatan')
-                              <small class="text-danger">{{ $message }}</small>
-                          @enderror
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                       </div>
-
-                      <!-- Dropdown Posisi -->
-                      <div class="form-group">
-                          <label for="id_posisi">Posisi:</label>
-                          <select name="id_posisi" id="id_posisi" class="form-control" required>
-                              <option value="">Pilih Posisi</option>
-                              @foreach ($posisi as $item)
-                                  <option value="{{ $item->id_posisi }}">{{ $item->nama_posisi }}</option>
-                              @endforeach
-                          </select>
-                      </div>
-
-                      <!-- Dropdown Tingkat Kegiatan -->
-                      <div class="form-group">
-                          <label for="idtingkat_kegiatan">Tingkat Kegiatan:</label>
-                          <select name="idtingkat_kegiatan" id="idtingkat_kegiatan" class="form-control" required>
-                              <option value="">Pilih Tingkat Kegiatan</option>
-                              @foreach ($tingkatKegiatan as $item)
-                                  <option value="{{ $item->idtingkat_kegiatan }}">{{ $item->tingkat_kegiatan }}</option>
-                              @endforeach
-                          </select>
-                      </div>
-
-                      <!-- Dropdown Jenis Kegiatan -->
-                      <div class="form-group">
-                          <label for="idjenis_kegiatan">Jenis Kegiatan:</label>
-                          <select name="idjenis_kegiatan" id="idjenis_kegiatan" class="form-control" required>
-                              <option value="">Pilih Jenis Kegiatan</option>
-                              @foreach ($jenisKegiatan as $item)
-                                  <option value="{{ $item->idjenis_kegiatan }}">{{ $item->jenis_kegiatan }}</option>
-                              @endforeach
-                          </select>
-                      </div>
-
-                      <!-- Sertifikat -->
-                      <div class="form-group">
-                          <label for="sertifikat">Upload Sertifikat:</label>
-                          <input type="file" id="sertifikat" name="sertifikat" class="form-control-file" 
-                              accept=".pdf,.jpg,.jpeg,.png" required>
-                          @error('sertifikat')
-                              <small class="text-danger">{{ $message }}</small>
-                          @enderror
-                      </div>
-
-                      <!-- Submit Button -->
-                      <button type="submit" class="btn btn-primary btn-block">Simpan Kegiatan</button>
                   </form>
               </div>
           </div>
       </div>
-  </div> --}}
-
+      <script>
+        // JavaScript untuk preview foto secara realtime
+        document.getElementById('foto_profil').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // Ubah src gambar dengan hasil load
+                document.getElementById('fotoProfilPreview').src = e.target.result;
+            };
+            
+            // Ambil file yang dipilih
+            var file = event.target.files[0];
+            
+            if (file) {
+                reader.readAsDataURL(file); // Membaca file sebagai URL data
+            }
+        });
+    </script>
 @endsection

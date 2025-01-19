@@ -14,16 +14,93 @@
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style --> 
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
   <link rel="icon" href="#">
+  <style>
+    body {
+      background-image: url('image/foto_login.jpg'); /* Ganti dengan URL gambar Anda */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    /* Overlay untuk background */
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); /* Warna overlay */
+      z-index: 1;
+    }
+
+    .login-box {
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.8); /* Opasitas putih */
+        backdrop-filter: blur(10px); /* Efek blur */
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border: 1px solid #dcdcdc;
+    }
+
+    .card-header {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .card-header h2, .card-header h4 {
+      font-weight: bold;
+      color: #004085;
+    }
+
+    .login-box-msg {
+      font-size: 16px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      color: #007bff;
+    }
+
+    a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+      input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    button:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+    }
+
+    }
+  </style>
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="../../index2.html" class="h1">
-        <b>SIPRAJA</b><br/>
+<body>
+  <div class="background-overlay"></div>
+  <div class="login-box">
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <h2>SIPRAJA</h2>
         <h4>Politeknik Negeri Bali</h4>
       </a> 
     </div>

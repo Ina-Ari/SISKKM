@@ -10,10 +10,11 @@ class Kegiatan extends Model
     use HasFactory;
 
     protected $table = 'kegiatan';
+    protected $primaryKey = 'id_kegiatan'; 
 
     protected $fillable = [
         'Nim',
-        'Nama_kegiatan',
+        'nama_kegiatan',
         'tanggal_kegiatan',
         'id_poin',
         'id_posisi',

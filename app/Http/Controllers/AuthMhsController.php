@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\JenisKegiatan;
-use App\Models\kegiatan;
 use App\Models\TingkatKegiatan;
+use App\Models\kegiatan;
 use App\Models\Posisi;
 use App\Models\Poin;
 use App\Models\AuthMhs;
+use App\Models\Jurusan;
 use App\Models\Mahasiswa;
+use App\Models\Prodi;
 
 class AuthMhsController extends Controller
 {
@@ -29,17 +31,19 @@ class AuthMhsController extends Controller
             return redirect()->route('loginmhs');
         }
     
-        $nim = session('nim');
-    
         // Ambil data mahasiswa berdasarkan nim dari sesi
+        $nim = session('nim');
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+        $kode_prodi = Prodi::all();
+        $jurusan = Jurusan::all();
+    
     
         if (!$mahasiswa) {
             // Jika data mahasiswa tidak ditemukan, redirect ke halaman login
             return redirect()->route('loginmhs')->withErrors(['error' => 'Mahasiswa tidak ditemukan.']);
         }
         
-        return view('mhs.profileMhs', compact('mahasiswa', 'nim'));
+        return view('mhs.profileMhs', compact('mahasiswa', 'nim', 'kode_prodi', 'jurusan'));
     } 
 
     public function indexMhs()
@@ -63,7 +67,7 @@ class AuthMhsController extends Controller
         $kegiatan = DB::table('kegiatan')
             ->join('tingkat_kegiatan', 'kegiatan.idtingkat_kegiatan', '=', 'tingkat_kegiatan.idtingkat_kegiatan')
             ->join('posisi', 'kegiatan.id_posisi', '=', 'posisi.id_posisi')
-            ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin')
+            ->join('poin', 'kegiatan.id_poin', '=', 'poin.id_poin') 
             ->where('kegiatan.nim', $nim)
             ->select('kegiatan.*', 'tingkat_kegiatan.tingkat_kegiatan', 'posisi.nama_posisi', 'poin.poin')
             ->get();
@@ -83,8 +87,9 @@ class AuthMhsController extends Controller
 
         // Kalkulasi total kegiatan yang belum terverifikasi
         $totalVerifFalse = $kegiatan->filter(function ($item) {
-            return $item->verif === 'False'; // Or use false if the data type is boolean
+            return $item->verif === 'False' || $item->verif == 0; // Memeriksa 'False' atau 0
         })->count();
+        
 
         $jenjang_pendidikan = $mahasiswa->jenjang_pendidikan;
 

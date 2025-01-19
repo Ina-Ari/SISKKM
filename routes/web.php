@@ -72,7 +72,11 @@ Route::get('/form', function () {
     return view('form');
 });
 Route::post('/tambahKegiatan', [formControl::class, 'store'])->name('form.store');
+Route::post('/updateKegiatan/{id_kegiatan}', [formControl::class, 'updateKegiatan'])->name('form.updateKegiatan');
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 Route::get('/mahasiswa/{id}/kegiatan', [MahasiswaController::class, 'kegiatan'])->name('mahasiswa.kegiatan');
+Route::get('/mahasiswa/{nim}/edit', [formControl::class, 'edit'])->name('form.edit');
+Route::post('/mahasiswa/{nim}/update', [formControl::class, 'update'])->name('form.update');
+
 ?>
 
